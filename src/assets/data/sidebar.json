@@ -51,7 +51,7 @@
   },
   {
     "display_name": "Tài khoản",
-    "route": "/editProfile",
+    "route": "/account",
     "icon": "bx bx-id-card",
     "permissionUser": [0, 1, 2]
   }

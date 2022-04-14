@@ -3,6 +3,8 @@
   }
   main {
     padding: 10px;
+    width: 100%;
+    margin: 0 10px;
   }
   
   .title {
@@ -17,6 +19,8 @@
     color: white;
     height: 100vh;
     min-width: 56px;
+    /* position: fixed;
+    z-index: 1000; */
   }
   
   .top_section {

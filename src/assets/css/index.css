@@ -50,6 +50,7 @@
   box-sizing: border-box;
   transition: 0.2s all linear infinite;
   -webkit-tap-highlight-color: transparent;
+  overflow: hidden;
 }
 
 body {
