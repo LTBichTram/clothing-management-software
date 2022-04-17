@@ -3,6 +3,7 @@ import axios from "axios";
 import "./Staffs.css";
 
 import ModalUnstyled from "@mui/core/ModalUnstyled";
+import TableContainer from '@mui/material/TableContainer';
 import AddStaff from "./addstaff/AddStaff";
 import UpdateStaff from "./updatestaff/UpdateStaff";
 import Dialog from "../../components/dialog/Dialog";
@@ -41,6 +42,7 @@ const Staffs = () => {
   const [showFormAddStaff, setShowFormAddStaff] = useState(false);
   const [showFormUpdateStaff, setShowFormUpdateStaff] = useState(false);
   const [showDialogDelete, setShowDialogDelete] = useState(false);
+  
   const searchTextHandler = e => {
     setSearchText(e.target.value);
   }
@@ -65,7 +67,7 @@ const Staffs = () => {
         handleCloseDialog();
       });
   };
-
+  
  //filter by phone and name staffs
  useEffect(()=>{
   //Call api and get data
@@ -225,9 +227,9 @@ const Staffs = () => {
                   </td>
                 </tr>)
               })
-
             }
           </table>
+          
         </div>
       </div>
     </div>
