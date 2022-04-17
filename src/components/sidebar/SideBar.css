@@ -2,9 +2,7 @@
     display: flex;
   }
   main {
-    padding: 10px;
     width: 100%;
-    margin: 0 10px;
   }
   
   .title {
@@ -19,8 +17,6 @@
     color: white;
     height: 100vh;
     min-width: 56px;
-    /* position: fixed;
-    z-index: 1000; */
   }
   
   .top_section {
@@ -82,14 +78,17 @@
     border-right: 4px solid var(--add-color) !important;
     background: var(--second-bg) !important;
     color: var(--main-color) !important;
+    border-top-left-radius: 25%;
+    
+    
   }
   .link_text {
     white-space: nowrap;
-    font-size: 17px;
+    font-size: 18px;
     font-weight: bold;
   }
   .icon {
-    font-size:24px;
+    font-size:25px;
   }
   
   

@@ -1,9 +1,108 @@
-.div_staff {
-  position: relative;
-  display: flex;
-  justify-content: space-between;
-  height: 100%;
+.staffs {
+  background-color: #fafafb;
 }
+  
+  .search_name {
+    height: 46px;
+    padding-top: 30px;
+    padding-bottom: 50px;
+    background-color: #097c99;
+    background-image: linear-gradient(200deg, #005059, #bfd6d2);
+  }
+
+  .search_name-wrapper {
+    width: 600px;
+    margin: auto;
+    display: flex;
+    align-items: center;
+    background-color: white;
+    border-radius: 5px;
+  }
+
+  .search_name-input {
+    flex: 1;
+    font-size: 16px;
+    padding:8px 6px; 
+  }
+
+  .search_name-icon {
+    padding: 6px;
+    font-size: 23px;
+    width: 59px;
+    color: #fafafb;
+    margin-right: 2px;
+    border-radius: 3px;
+    text-align: center;
+    cursor: pointer;
+    background-image: linear-gradient(150deg, #005059, #bfd6d2);
+  }
+
+  .list_staff {
+    display: flex;
+    justify-content: space-around;
+    margin-top: -10px;
+    margin-left: -10px;
+    padding: 25px 10px 30px 20px;
+  }
+
+  .search_position {
+    font-size:17px;
+    margin-bottom: 20px;
+    padding: 25px 20px;
+    border-top: 1px solid rgb(0, 58, 146);
+    border-left: 1px solid rgb(0, 58, 146);
+    border-right: 1px solid rgb(0, 58, 146);
+    box-shadow: 0 2px 15px rgb(0 0 0 / 15%);
+    border-radius: 8px;
+    background-color: #fff;
+    margin-bottom: 25px;
+    animation: fade-in-ani 1s;
+  }
+
+  .search_position:hover {
+    box-shadow: 0 3px 15px rgb(0 102 110 / 35%);
+  }
+
+  .search_position-label {
+    display: block;
+    padding: 10px;
+  }
+
+  .search_position-select {
+    font-size: 17px;
+    margin-left: 10px;
+  }
+
+  .action-staff-btn {
+    margin: 10px;
+  }
+  .action-staff-btn > button {
+    cursor: pointer;
+  
+    display: flex;
+    align-items: center;
+    font-weight: bold;
+    padding: 10px 20px;
+    color: #fff;
+    border-radius: 5px;
+    background-color: rgb(3, 169, 244);
+    font-size: 18px;
+  }
+
+  .list_right {
+    margin-top: 20px;
+  }
+  
+  @keyframes fade-in-ani {
+    from {
+      opacity: 0;
+      transform: translate(0, -25%);
+    }
+    to {
+      transform: translate(0, 0%);
+      opacity: 1;
+    }
+  }
 
 .div_search {
   width: 224px;
@@ -69,10 +168,8 @@
   border-bottom: 1px solid #a19b9b;
 }
 
-@keyframes fade-in-ani {
-  from {
-    opacity: 0;
-    transform: translate(0, -25%);
+  #staffs td.gender, #staffs td.fullname{
+    text-transform: capitalize;
   }
   to {
     transform: translate(0, 0%);

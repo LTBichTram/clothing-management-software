@@ -48,7 +48,7 @@
   padding: 0;
   margin: 0;
   box-sizing: border-box;
-  transition: 0.2s all linear infinite;
+  transition: 0.3s all linear infinite;
   -webkit-tap-highlight-color: transparent;
   overflow: hidden;
 }

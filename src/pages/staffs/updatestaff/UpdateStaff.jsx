@@ -10,26 +10,35 @@ import validateUpdateStaff from "../form_validate/validateUpdateStaff";
 import axios from "axios";
 
 const UpdateStaff = ({ staff, setStaff, setShowFormUpdateStaff }) => {
+  
+  
+  
   const inputAvatarRef = useRef(null);
-  console.log(staff._id);
+
+  
   //Call API
   const submitForm = () => {
     var formStaff = new FormData();
+    console.log(staff.position);
     formStaff.append("username", staff.username);
-
+   
     formStaff.append("fullname", staff.fullname);
     formStaff.append("address", staff.address);
-    formStaff.append("birthday", staff.birthday);
+    formStaff.append("birthday", new Date(staff.birthday));
     formStaff.append("gender", staff.gender);
     formStaff.append("position", staff.position);
     formStaff.append("email", staff.email);
     formStaff.append("phone", staff.phone);
-    formStaff.append("image", avatar);
+    console.log(avatar)
+    if(avatar){
+      formStaff.append("image", avatar);
 
+    }
+   
     //post to API
     axios
       .put(
-        `https://clothesapp123.herokuapp.com/api/users/updateUser/${staff._id}`,
+        `http://localhost:8080/api/users/update/${staff.id}`,
         formStaff,
         {
           headers: {
@@ -77,7 +86,7 @@ const UpdateStaff = ({ staff, setStaff, setShowFormUpdateStaff }) => {
       <div className="update_staff-body">
         <div className="update_staff_img">
           <img
-            src={avatar ? URL.createObjectURL(avatar) : staff.imageUrl}
+            src={avatar ? URL.createObjectURL(avatar) : staff.imgUrl}
             alt=""
             className="update_staff-avatar"
           />
@@ -99,7 +108,7 @@ const UpdateStaff = ({ staff, setStaff, setShowFormUpdateStaff }) => {
         <div className="update_staff-form">
           <div className="update_staff-form-row">
             <span>Mã nhân viên</span>
-            <input name="username" value={staff._id} type="text" />
+            <input name="username" value={staff.id.substr(staff.id.length - 7)} type="text" />
             <p className="update_staff-form-error">{errors.username}</p>
           </div>
           <div className="update_staff-form-row">

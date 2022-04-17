@@ -143,6 +143,7 @@ const Products = () => {
 
   //filter products by category
   const handleFilterProductsByCategory = (e) => {
+    console.log("Test categories ");
     axios
       .get(
         "https://clothesapp123.herokuapp.com/api/products/productByCategory",
