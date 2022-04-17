@@ -5,6 +5,7 @@ import "./Staffs.css";
 import ModalUnstyled from "@mui/core/ModalUnstyled";
 import AddStaff from "./addstaff/AddStaff";
 import UpdateStaff from "./updatestaff/UpdateStaff";
+import Dialog from "../../components/dialog/Dialog";
 import { styled, Box } from "@mui/system";
 
 const StyledModal = styled(ModalUnstyled)`
@@ -39,15 +40,31 @@ const Staffs = () => {
   const [selectedStaff, setSelectedStaff] = useState();
   const [showFormAddStaff, setShowFormAddStaff] = useState(false);
   const [showFormUpdateStaff, setShowFormUpdateStaff] = useState(false);
+  const [showDialogDelete, setShowDialogDelete] = useState(false);
   const searchTextHandler = e => {
     setSearchText(e.target.value);
   }
   const searchPositionHandler = e => {
     setSearchPosition(e.target.value);
   }
-  // const handleCloseDialog = () => {
-  //   setShowDialogDelete(false);
-  // };
+  const handleCloseDialog = () => {
+    setShowDialogDelete(false);
+  };
+  const handleDeleteStaff = () => {
+    axios
+      .post(
+        `http://localhost:8080/api/users/delete/${selectedStaff.id}`
+      )
+      .then((res) => {
+        handleCloseDialog();
+        alert("Xoá nhân thành công");
+        setSelectedStaff(null);
+      })
+      .catch(() => {
+        alert("Lỗi xin bạn hãy thử lại sau");
+        handleCloseDialog();
+      });
+  };
 
  //filter by phone and name staffs
  useEffect(()=>{
@@ -97,6 +114,13 @@ const Staffs = () => {
 
   return (
     <div className="staff">
+      <Dialog
+        title="Xoá nhân viên"
+        content={`Bạn có muốn xoá nhân viên: ${selectedStaff?.fullname} `}
+        open={showDialogDelete}
+        handleCancel={handleCloseDialog}
+        handleAction={handleDeleteStaff}
+      />
       <StyledModal
         aria-labelledby="unstyled-modal-title"
         aria-describedby="unstyled-modal-description"
@@ -190,7 +214,15 @@ const Staffs = () => {
                       class='bx bxs-edit'
                     ></i>
                   </td>
-                  <td><i style={{color: '#f32727'}} class='bx bx-trash'></i></td>
+                  <td
+                    onClick={() => {
+                      setSelectedStaff(staff);
+                      setShowDialogDelete(true);
+                    }}
+                    padding="checkbox"
+                  >
+                    <i style={{ fontSize: 18, color: "#F26339" }} class='bx bx-trash'></i>
+                  </td>
                 </tr>)
               })
 
