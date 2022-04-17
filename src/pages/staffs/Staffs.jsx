@@ -33,31 +33,25 @@ const Backdrop = styled("div")`
 
 const Staffs = () => {
   const [staffs, setStaffs] = useState([]);
-  const [originStaffs,setOriginStaffs]=useState([]);
-  const [searchText, setSearchText] = useState('');
-  const [searchPosition, setSearchPosition] = useState('All');
+  const [originStaffs, setOriginStaffs] = useState([]);
+  const [searchText, setSearchText] = useState("");
+  const [searchPosition, setSearchPosition] = useState("All");
   const [selectedStaff, setSelectedStaff] = useState();
   const [showFormAddStaff, setShowFormAddStaff] = useState(false);
   const [showFormUpdateStaff, setShowFormUpdateStaff] = useState(false);
-<<<<<<< HEAD
-  const searchTextHandler = (e) => {
-=======
   const [showDialogDelete, setShowDialogDelete] = useState(false);
-  const searchTextHandler = e => {
->>>>>>> 23daafbbeb6854852760127a3ea457905f9206ca
+  const searchTextHandler = (e) => {
     setSearchText(e.target.value);
   };
   const searchPositionHandler = (e) => {
     setSearchPosition(e.target.value);
-  }
+  };
   const handleCloseDialog = () => {
     setShowDialogDelete(false);
   };
   const handleDeleteStaff = () => {
     axios
-      .post(
-        `http://localhost:8080/api/users/delete/${selectedStaff.id}`
-      )
+      .post(`http://localhost:8080/api/users/delete/${selectedStaff.id}`)
       .then((res) => {
         handleCloseDialog();
         alert("Xoá nhân thành công");
@@ -133,69 +127,6 @@ const Staffs = () => {
       >
         <AddStaff setShowFormAddStaff={setShowFormAddStaff} />
       </StyledModal>
-<<<<<<< HEAD
-
-      <div className="div_left col-3">
-        <div className="div_search">
-          <div className="header_search">Tìm kiếm</div>
-          <div className="search">
-            <input
-              value={searchText}
-              onChange={searchTextHandler}
-              placeholder="Nhập tên hoặc SĐT nhân viên"
-            />
-            <i className="bx bx-search"></i>
-          </div>
-        </div>
-        <div className="div_search">
-          <div className="header_search">Chức vụ</div>
-          <select
-            onChange={searchPositionHandler}
-            className="selectbox"
-            value={searchPosition}
-          >
-            <option value="all">Tất cả</option>
-            <option value="Nhân viên kho">Nhân viên kho</option>
-            <option value="Nhân viên thu ngân">Nhân viên thu ngân</option>
-          </select>
-        </div>
-        <div className="action-staff-btn">
-          <button onClick={() => setShowFormAddStaff(true)}>
-            <i class="bx bx-plus"></i>
-            Thêm nhân viên{" "}
-          </button>
-        </div>
-      </div>
-      <div className="div_right col-9">
-        <table id="staffs">
-          <tr>
-            <th>Mã nhân viên</th>
-            <th>Tên nhân viên</th>
-            <th>Chức vụ</th>
-            <th>Số điện thoại</th>
-            <th>Giới tính</th>
-            <th></th>
-            <th></th>
-          </tr>
-          {staffs.map((staff) => {
-            return (
-              <tr>
-                <td>{staff.id.substr(staff.id.length - 7)}</td>
-                <td>{staff.fullname}</td>
-                <td>{staff.position}</td>
-                <td>{staff.phone}</td>
-                <td className="gender">{staff.gender}</td>
-                <td>
-                  <i class="bx bxs-edit"></i>
-                </td>
-                <td>
-                  <i style={{ color: "#f32727" }} class="bx bx-trash"></i>
-                </td>
-              </tr>
-            );
-          })}
-        </table>
-=======
       <StyledModal
         aria-labelledby="unstyled-modal-title"
         aria-describedby="unstyled-modal-description"
@@ -211,7 +142,7 @@ const Staffs = () => {
           setShowFormUpdateStaff={setShowFormUpdateStaff}
         />
       </StyledModal>
-     
+
       <div className="search_name">
         <div className="search_name-wrapper">
           <input
@@ -221,7 +152,10 @@ const Staffs = () => {
             onChange={searchTextHandler}
             placeholder="Nhập tên hoặc SĐT nhân viên"
           />
-          <label htmlFor="search_name-input" className="search_name-icon bx bx-search"></label>
+          <label
+            htmlFor="search_name-input"
+            className="search_name-icon bx bx-search"
+          ></label>
         </div>
       </div>
       <div className="list_staff">
@@ -273,9 +207,9 @@ const Staffs = () => {
                     }}
                     padding="checkbox"
                   >
-                    <i 
+                    <i
                       style={{ fontSize: 18, color: "#0DB3E2" }}
-                      class='bx bxs-edit'
+                      class="bx bxs-edit"
                     ></i>
                   </td>
                   <td
@@ -285,7 +219,10 @@ const Staffs = () => {
                     }}
                     padding="checkbox"
                   >
-                    <i style={{ fontSize: 18, color: "#F26339" }} class='bx bx-trash'></i>
+                    <i
+                      style={{ fontSize: 18, color: "#F26339" }}
+                      class="bx bx-trash"
+                    ></i>
                   </td>
                 </tr>)
               })
@@ -293,7 +230,6 @@ const Staffs = () => {
             }
           </table>
         </div>
->>>>>>> 3efd1562017d1e22ab7abade37c4fea4ae88479f
       </div>
     </div>
   );
