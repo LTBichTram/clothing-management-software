@@ -32,12 +32,11 @@ const Backdrop = styled("div")`
   -webkit-tap-highlight-color: transparent;
 `;
 
-
 const Staffs = () => {
   const [staffs, setStaffs] = useState([]);
-  const [originStaffs,setOriginStaffs]=useState([]);
-  const [searchText, setSearchText] = useState('');
-  const [searchPosition, setSearchPosition] = useState('All');
+  const [originStaffs, setOriginStaffs] = useState([]);
+  const [searchText, setSearchText] = useState("");
+  const [searchPosition, setSearchPosition] = useState("All");
   const [selectedStaff, setSelectedStaff] = useState();
   const [showFormAddStaff, setShowFormAddStaff] = useState(false);
   const [showFormUpdateStaff, setShowFormUpdateStaff] = useState(false);
@@ -45,18 +44,16 @@ const Staffs = () => {
   
   const searchTextHandler = e => {
     setSearchText(e.target.value);
-  }
-  const searchPositionHandler = e => {
+  };
+  const searchPositionHandler = (e) => {
     setSearchPosition(e.target.value);
-  }
+  };
   const handleCloseDialog = () => {
     setShowDialogDelete(false);
   };
   const handleDeleteStaff = () => {
     axios
-      .post(
-        `http://localhost:8080/api/users/delete/${selectedStaff.id}`
-      )
+      .post(`http://localhost:8080/api/users/delete/${selectedStaff.id}`)
       .then((res) => {
         handleCloseDialog();
         alert("Xoá nhân thành công");
@@ -81,33 +78,31 @@ const Staffs = () => {
     })
  },[searchText]) 
 
- //filter by position Staffs
- useEffect(() => {
-   axios
-    .get(`http://localhost:8080/api/users/filterByPositon?position=${searchPosition}`)
-    .then((response)=>{
-      
-      if(response.data.length === 0){
-        setStaffs(originStaffs)
+  //filter by position Staffs
+  useEffect(() => {
+    axios
+      .get(
+        `http://localhost:8080/api/users/filterByPositon?position=${searchPosition}`
+      )
+      .then((response) => {
+        if (response.data.length === 0) {
+          setStaffs(originStaffs);
+        } else {
+          setStaffs(response.data);
+        }
+      })
+      .catch((error) => {
+        console.log(error.response.data);
+      });
+  }, [searchPosition]);
 
-      }else{
-        setStaffs(response.data)
-      }
-     
-    })
-    .catch((error)=>{
-      console.log(error.response.data);
-    })
- },[searchPosition])
-
-//get All Staffs  
+  //get All Staffs
   useEffect(() => {
     axios
       .get("http://localhost:8080/api/users")
       .then((res) => {
         setStaffs(res.data);
-        setOriginStaffs(res.data)
-       
+        setOriginStaffs(res.data);
       })
       .catch((err) => {
         console.log(err.response);
@@ -149,7 +144,7 @@ const Staffs = () => {
           setShowFormUpdateStaff={setShowFormUpdateStaff}
         />
       </StyledModal>
-     
+
       <div className="search_name">
         <div className="search_name-wrapper">
           <input
@@ -159,7 +154,10 @@ const Staffs = () => {
             onChange={searchTextHandler}
             placeholder="Nhập tên hoặc SĐT nhân viên"
           />
-          <label htmlFor="search_name-input" className="search_name-icon bx bx-search"></label>
+          <label
+            htmlFor="search_name-input"
+            className="search_name-icon bx bx-search"
+          ></label>
         </div>
       </div>
       <div className="list_staff">
@@ -194,10 +192,8 @@ const Staffs = () => {
               <th></th>
               <th></th>
             </tr>
-            {
-              staffs.map((staff, index) => {
-                
-                return (
+            {staffs.map((staff, index) => {
+              return (
                 <tr key={index}>
                   <td>{staff.id.substr(staff.id.length - 7)}</td>
                   <td className="fullname">{staff.fullname}</td>
@@ -211,9 +207,9 @@ const Staffs = () => {
                     }}
                     padding="checkbox"
                   >
-                    <i 
+                    <i
                       style={{ fontSize: 18, color: "#0DB3E2" }}
-                      class='bx bxs-edit'
+                      class="bx bxs-edit"
                     ></i>
                   </td>
                   <td
@@ -223,7 +219,10 @@ const Staffs = () => {
                     }}
                     padding="checkbox"
                   >
-                    <i style={{ fontSize: 18, color: "#F26339" }} class='bx bx-trash'></i>
+                    <i
+                      style={{ fontSize: 18, color: "#F26339" }}
+                      class="bx bx-trash"
+                    ></i>
                   </td>
                 </tr>)
               })
