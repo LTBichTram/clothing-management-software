@@ -1,13 +1,4 @@
 import React, { useState, useEffect } from "react";
-import Paper from "@mui/material/Paper";
-import Table from "@mui/material/Table";
-import TableBody from "@mui/material/TableBody";
-import TableCell from "@mui/material/TableCell";
-import TableContainer from "@mui/material/TableContainer";
-import TableHead from "@mui/material/TableHead";
-import TablePagination from "@mui/material/TablePagination";
-import TableRow from "@mui/material/TableRow";
-import Dialog from "../../components/dialog/Dialog";
 import axios from "axios";
 import "./Staffs.css";
 
@@ -44,7 +35,8 @@ const Staffs = () => {
   const [staffs, setStaffs] = useState([]);
   const [originStaffs,setOriginStaffs]=useState([]);
   const [searchText, setSearchText] = useState('');
-  const [searchPosition, setSearchPosition] = useState('all');
+  const [searchPosition, setSearchPosition] = useState('All');
+  const [selectedStaff, setSelectedStaff] = useState();
   const [showFormAddStaff, setShowFormAddStaff] = useState(false);
   const [showFormUpdateStaff, setShowFormUpdateStaff] = useState(false);
   const searchTextHandler = e => {
@@ -53,6 +45,9 @@ const Staffs = () => {
   const searchPositionHandler = e => {
     setSearchPosition(e.target.value);
   }
+  // const handleCloseDialog = () => {
+  //   setShowDialogDelete(false);
+  // };
 
  //filter by phone and name staffs
  useEffect(()=>{
@@ -98,10 +93,10 @@ const Staffs = () => {
       .catch((err) => {
         console.log(err.response);
       });
-  }, []);
+  }, [showFormAddStaff, showFormUpdateStaff, selectedStaff]);
 
   return (
-    <div className="div_staff">
+    <div className="staff">
       <StyledModal
         aria-labelledby="unstyled-modal-title"
         aria-describedby="unstyled-modal-description"
@@ -113,67 +108,95 @@ const Staffs = () => {
       >
         <AddStaff setShowFormAddStaff={setShowFormAddStaff} />
       </StyledModal>
+      <StyledModal
+        aria-labelledby="unstyled-modal-title"
+        aria-describedby="unstyled-modal-description"
+        open={showFormUpdateStaff}
+        onClose={() => {
+          setShowFormUpdateStaff(false);
+        }}
+        BackdropComponent={Backdrop}
+      >
+        <UpdateStaff
+          staff={selectedStaff}
+          setStaff={setSelectedStaff}
+          setShowFormUpdateStaff={setShowFormUpdateStaff}
+        />
+      </StyledModal>
      
-
-      <div className="div_left col-3">
-        <div className="div_search">
-          <div className="header_search">Tìm kiếm</div>
-          <div className="search">
-            <input
-             value={searchText}
-             onChange={searchTextHandler}
-              placeholder="Nhập tên hoặc SĐT nhân viên"
-            />
-            <i className="bx bx-search"></i>
-          </div>
-        </div>
-        <div className="div_search">
-          <div className="header_search">Chức vụ</div>
-          <select
-            onChange={searchPositionHandler}
-            className="selectbox"
-            value={searchPosition}
-          >
-            <option value="all">Tất cả</option>
-            <option value="Nhân viên kho">Nhân viên kho</option>
-            <option value="Nhân viên thu ngân">Nhân viên thu ngân</option>
-          </select>
-        </div>
-        <div className="action-staff-btn">
-          <button onClick={() => setShowFormAddStaff(true)}>
-            <i class="bx bx-plus"></i>
-            Thêm nhân viên{" "}
-          </button>
+      <div className="search_name">
+        <div className="search_name-wrapper">
+          <input
+            className="search_name-input"
+            id="search_name-input"
+            value={searchText}
+            onChange={searchTextHandler}
+            placeholder="Nhập tên hoặc SĐT nhân viên"
+          />
+          <label htmlFor="search_name-input" className="search_name-icon bx bx-search"></label>
         </div>
       </div>
-      <div className="div_right col-9">
-        <table id="staffs">
-          <tr>
-            <th>Mã nhân viên</th>
-            <th>Tên nhân viên</th>
-            <th>Chức vụ</th>
-            <th>Số điện thoại</th>
-            <th>Giới tính</th>
-            <th></th>
-            <th></th>
-          </tr>
-          {
-            staffs.map(staff => {
-              
-              return (
-              <tr>
-                <td>{staff.id.substr(staff.id.length - 7)}</td>
-                <td>{staff.fullname}</td>
-                <td>{staff.position}</td>
-                <td>{staff.phone}</td>
-                <td className="gender">{staff.gender}</td>
-                <td><i class='bx bxs-edit'></i></td>
-                <td><i style={{color: '#f32727'}} class='bx bx-trash'></i></td>
-              </tr>)
-            })
+      <div className="list_staff">
+        <div className="list_left">
+          <div className="search_position">
+            <label className="search_position-label">Chức vụ</label>
+            <select
+              onChange={searchPositionHandler}
+              className="search_position-select"
+              value={searchPosition}
+            >
+              <option value="All">Tất cả</option>
+              <option value="Nhân viên kho">Nhân viên kho</option>
+              <option value="Nhân viên thu ngân">Nhân viên thu ngân</option>
+            </select>
+          </div>
+          <div className="action-staff-btn">
+            <button onClick={() => setShowFormAddStaff(true)}>
+              <i class="bx bx-plus"></i>
+              Thêm nhân viên{" "}
+            </button>
+          </div>
+        </div>
+        <div className="list_right">
+          <table id="staffs">
+            <tr>
+              <th>Mã nhân viên</th>
+              <th>Tên nhân viên</th>
+              <th>Chức vụ</th>
+              <th>Số điện thoại</th>
+              <th>Giới tính</th>
+              <th></th>
+              <th></th>
+            </tr>
+            {
+              staffs.map((staff, index) => {
+                
+                return (
+                <tr key={index}>
+                  <td>{staff.id.substr(staff.id.length - 7)}</td>
+                  <td className="fullname">{staff.fullname}</td>
+                  <td>{staff.position}</td>
+                  <td>{staff.phone}</td>
+                  <td className="gender">{staff.gender}</td>
+                  <td
+                    onClick={() => {
+                      setSelectedStaff(staff);
+                      setShowFormUpdateStaff(true);
+                    }}
+                    padding="checkbox"
+                  >
+                    <i 
+                      style={{ fontSize: 18, color: "#0DB3E2" }}
+                      class='bx bxs-edit'
+                    ></i>
+                  </td>
+                  <td><i style={{color: '#f32727'}} class='bx bx-trash'></i></td>
+                </tr>)
+              })
 
-          }
-        </table>
+            }
+          </table>
+        </div>
       </div>
     </div>
   );

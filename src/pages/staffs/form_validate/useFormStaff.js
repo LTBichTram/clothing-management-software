@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 const useFormStaff = (callback, staff, setStaff, validate) => {
   const [errors, setErrors] = useState({});
   useEffect(() => {
-    console.log(errors);
+    
 
     //Validate Success
     if (isSubmitting && Object.keys(errors).length === 0) {
@@ -19,7 +19,7 @@ const useFormStaff = (callback, staff, setStaff, validate) => {
   };
   const handleChangeBirthday = (birthday) => {
     setStaff((prev) => {
-      console.log(birthday);
+     
       return { ...prev, birthday: birthday };
     });
   };
