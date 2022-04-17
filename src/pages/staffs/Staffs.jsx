@@ -190,10 +190,8 @@ const Staffs = () => {
               <th></th>
               <th></th>
             </tr>
-            {
-              staffs.map((staff, index) => {
-                
-                return (
+            {staffs.map((staff, index) => {
+              return (
                 <tr key={index}>
                   <td>{staff.id.substr(staff.id.length - 7)}</td>
                   <td className="fullname">{staff.fullname}</td>
@@ -224,10 +222,9 @@ const Staffs = () => {
                       class="bx bx-trash"
                     ></i>
                   </td>
-                </tr>)
-              })
-
-            }
+                </tr>
+              );
+            })}
           </table>
         </div>
       </div>
