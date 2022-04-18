@@ -11,7 +11,7 @@ import TableRow from "@mui/material/TableRow";
 
 import axios from "axios";
 import { useReactToPrint } from "react-to-print";
-import "react-datepicker/dist/react-datepicker.css";
+
 import "./Customers.css";
 
 const columns = [

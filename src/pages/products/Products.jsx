@@ -8,7 +8,8 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TablePagination from "@mui/material/TablePagination";
 import TableRow from "@mui/material/TableRow";
-import axios from "./Products.css";
+import axios from "axios";
+import "./Products.css";
 
 import ModalUnstyled from "@mui/core/ModalUnstyled";
 import { styled } from "@mui/system";
@@ -142,22 +143,18 @@ const Products = () => {
 
   //filter products by category
   const handleFilterProductsByCategory = (e) => {
-    console.log("Test categories ");
+    console.log(`Test categories ${e.target.value}`);
+    if (e.target.value == "all") {
+      getAllProducts();
+    }
+    const categoryId = e.target.value;
     axios
       .get(
-        "https://clothesapp123.herokuapp.com/api/products/productByCategory",
-        {
-          params: {
-            category: e.target.value,
-          },
-          headers: {
-            "Content-Type": "multipart/form-data",
-            "Access-Control-Allow-Origin": "*",
-          },
-        }
+        `http://localhost:8080/api/products/productsByCategoryId/${categoryId}`
       )
       .then((res) => {
-        setProducts(res.data[0].productList);
+        console.log(res.data);
+        setProducts(res.data);
       })
       .catch((err) => {
         console.log("lỗi filter");
@@ -238,10 +235,10 @@ const Products = () => {
               className="selectbox"
             >
               <option value="all">Tất cả</option>
-              {categories.map((shirt, index) => {
+              {categories.map((category, index) => {
                 return (
-                  <option key={index} value={shirt.name}>
-                    {shirt.name}
+                  <option key={index} value={category.id}>
+                    {category.name}
                   </option>
                 );
               })}
