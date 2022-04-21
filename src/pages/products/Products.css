@@ -1,6 +1,8 @@
-.div_product {
+.products_container {
   position: relative;
   display: flex;
+  margin-top: 40px;
+  margin-left: 40px;
 }
 
 .clothes-category-card {

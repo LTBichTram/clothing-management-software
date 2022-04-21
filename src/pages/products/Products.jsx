@@ -135,7 +135,7 @@ const Products = () => {
     const productFilter = originProducts.filter((product) => {
       return (
         product.name.toLowerCase().indexOf(searchText.toLowerCase()) > -1 ||
-        product._id.toLowerCase().indexOf(searchText) > -1
+        product.id.indexOf(searchText) > -1
       );
     });
     setProducts(productFilter);
@@ -143,7 +143,6 @@ const Products = () => {
 
   //filter products by category
   const handleFilterProductsByCategory = (e) => {
-    console.log(`Test categories ${e.target.value}`);
     if (e.target.value == "all") {
       getAllProducts();
     }
@@ -153,7 +152,6 @@ const Products = () => {
         `http://localhost:8080/api/products/productsByCategoryId/${categoryId}`
       )
       .then((res) => {
-        console.log(res.data);
         setProducts(res.data);
       })
       .catch((err) => {
@@ -184,7 +182,7 @@ const Products = () => {
       .catch("Lỗi, xin hãy thử lại sau");
   };
   return (
-    <div className="div_product">
+    <div className="products_container">
       <Dialog
         title="Xoá sản phẩm"
         content={`Bạn có muốn xoá sản phẩm: ${selectedProduct?.name} `}
@@ -301,7 +299,6 @@ const Products = () => {
                           {columns.map((column) => {
                             let value = row[column.id];
                             if (column.id === "id") {
-                              console.log(`Test value ${value}`);
                               value = value?.substr(value.length - 7);
                             }
 

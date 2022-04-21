@@ -93,7 +93,7 @@
 .add_product-form-error {
   position: absolute;
   left: 30%;
-  top: -20px;
+
   font-weight: 500;
   color: #e74c3c;
   font-size: 14px;

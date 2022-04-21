@@ -26,46 +26,12 @@ const AddProduct = ({ setRerenderProducts, setShowFormAddProduct }) => {
 
   //get All categories
   useEffect(() => {
-    axios
-      .get("https://clothesapp123.herokuapp.com/api/products/getAllCategories")
-      .then((res) => {
-        console.log(res.data);
-        setCategories(res.data);
-        setCategoryId(res.data[0]._id);
-      });
+    axios.get("http://localhost:8080/api/categories").then((res) => {
+      console.log(res.data);
+      setCategories(res.data);
+      setCategoryId(res.data[0].id);
+    });
   }, []);
-
-  const [options, setOptions] = useState([
-    { id: 0, size: "3XL", quantity: 0 },
-    { id: 1, size: "XXL", quantity: 0 },
-    { id: 2, size: "XL", quantity: 0 },
-    { id: 3, size: "L", quantity: 0 },
-    { id: 4, size: "M", quantity: 0 },
-    { id: 5, size: "S", quantity: 0 },
-  ]);
-
-  const handleOptionChecked = (index) => {
-    let newOptions = [...options];
-    newOptions[index] = {
-      ...options[index],
-      checked: !newOptions[index].checked,
-    };
-    setOptions(newOptions);
-  };
-  const getOption = async () => {
-    // const newOptions = options.filter((option) => option.checked == true);
-
-    var newOptions = options
-      .filter((option) => option.checked === true && option.quantity > 0)
-      .map((option) => {
-        return {
-          size: option.size,
-          quantity: option.quantity,
-        };
-      });
-
-    return newOptions;
-  };
 
   const handleIncreaseDiscount = (e) => {
     setProduct((prev) => {
@@ -106,8 +72,7 @@ const AddProduct = ({ setRerenderProducts, setShowFormAddProduct }) => {
 
   //Submit form
   const submitForm = async () => {
-    var optionsVal = await getOption();
-    console.log(optionsVal);
+    console.log("Hello");
     const formProduct = new FormData();
     formProduct.append("categoryId", categoryId);
     formProduct.append("name", product.name);
@@ -118,28 +83,18 @@ const AddProduct = ({ setRerenderProducts, setShowFormAddProduct }) => {
 
     formProduct.append("image", avatar);
 
-    for (var i = 0; i < optionsVal.length; i++) {
-      var optionVal = optionsVal[i];
-      for (var prop in optionVal) {
-        formProduct.append(`options[${i}][${prop}]`, optionVal[prop]);
-      }
-    }
     //post to API
     axios
-      .post(
-        "https://clothesapp123.herokuapp.com/api/products/add",
-        formProduct,
-        {
-          headers: {
-            "Content-Type": "multipart/form-data",
-            "Access-Control-Allow-Origin": "*",
-          },
-        }
-      )
+      .post("http://localhost:8080/api/products/add", formProduct, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+          "Access-Control-Allow-Origin": "*",
+        },
+      })
       .then((res) => {
         console.log(res.data);
         setQrImage(res.data.qrCodeUrl);
-        setProductId(res.data._id);
+        setProductId(res.data.id);
         setRerenderProducts(true);
         alert("Thêm sản phẩm thành công");
       })
@@ -209,7 +164,7 @@ const AddProduct = ({ setRerenderProducts, setShowFormAddProduct }) => {
             >
               {categories.map((category) => {
                 return (
-                  <option key={category._id} value={category._id}>
+                  <option key={category.id} value={category.id}>
                     {category.name}
                   </option>
                 );
@@ -256,38 +211,7 @@ const AddProduct = ({ setRerenderProducts, setShowFormAddProduct }) => {
             />
             <p className="add_product-form-error">{errors.salePrice}</p>
           </div>
-          <div className="add_product-form-row">
-            <span style={{ width: "30%" }}>Size</span>
-            <div
-              style={{ width: "70%" }}
-              className="add_product-form-list-size"
-            >
-              {options.map((option, index) => {
-                return (
-                  <div className="add_product-form-size-item">
-                    <input
-                      onChange={() => handleOptionChecked(index)}
-                      type="checkbox"
-                    />
-                    <span>{`${option.size}:`}</span>
-                    <input
-                      value={option.quantity}
-                      type="text"
-                      className="add_product-form-size-count"
-                      onChange={(e) => {
-                        let newOptions = [...options];
-                        let option = { ...newOptions[index] };
-                        option.quantity = Math.floor(e.target.value);
-                        newOptions[index] = option;
-                        setOptions(newOptions);
-                      }}
-                    />
-                  </div>
-                );
-              })}
-            </div>
-            <p className="add_product-form-error">{errors.size}</p>
-          </div>
+
           <div className="add_product-form-row">
             <span>Giá nhập hàng</span>
             <input

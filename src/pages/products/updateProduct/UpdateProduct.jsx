@@ -17,44 +17,10 @@ const UpdateProduct = ({ product, setProduct, setShowFormUpdateProduct }) => {
 
   //get All cateogories
   useEffect(() => {
-    axios
-      .get("https://clothesapp123.herokuapp.com/api/products/getAllCategories")
-      .then((res) => {
-        setCategories(res.data);
-      });
+    axios.get("http://localhost:8080/api/categories").then((res) => {
+      setCategories(res.data);
+    });
   }, []);
-
-  const [options, setOptions] = useState([
-    { id: 0, size: "3XL", quantity: product.options[0]?.quantity || 0 },
-    { id: 1, size: "XXL", quantity: product.options[1]?.quantity || 0 },
-    { id: 2, size: "XL", quantity: product.options[2]?.quantity || 0 },
-    { id: 3, size: "L", quantity: product.options[3]?.quantity || 0 },
-    { id: 4, size: "M", quantity: product.options[4]?.quantity || 0 },
-    { id: 5, size: "S", quantity: product.options[5]?.quantity || 0 },
-  ]);
-
-  const handleOptionChecked = (index) => {
-    let newOptions = [...options];
-    newOptions[index] = {
-      ...options[index],
-      checked: !newOptions[index].checked,
-    };
-    setOptions(newOptions);
-  };
-  const getOption = async () => {
-    // const newOptions = options.filter((option) => option.checked == true);
-    console.log(options);
-    var newOptions = options
-      .filter((option) => option.checked === true && option.quantity > 0)
-      .map((option) => {
-        return {
-          size: option.size,
-          quantity: option.quantity,
-        };
-      });
-
-    return newOptions;
-  };
 
   const handleIncreaseDiscount = (e) => {
     setProduct((prev) => {
@@ -95,8 +61,6 @@ const UpdateProduct = ({ product, setProduct, setShowFormUpdateProduct }) => {
 
   //Submit form
   const submitForm = async () => {
-    var optionsVal = await getOption();
-    console.log(optionsVal);
     // console.log(categoryId);
     const formProduct = new FormData();
     formProduct.append("categoryId", categoryId);
@@ -108,12 +72,6 @@ const UpdateProduct = ({ product, setProduct, setShowFormUpdateProduct }) => {
 
     formProduct.append("image", avatar);
 
-    for (var i = 0; i < optionsVal.length; i++) {
-      var optionVal = optionsVal[i];
-      for (var prop in optionVal) {
-        formProduct.append(`options[${i}][${prop}]`, optionVal[prop]);
-      }
-    }
     //post to API
     axios
       .put(
@@ -168,7 +126,7 @@ const UpdateProduct = ({ product, setProduct, setShowFormUpdateProduct }) => {
             <input
               type="text"
               placeholder="Mã tự động"
-              value={product._id}
+              value={product.id}
               readOnly
             />
           </div>
@@ -196,7 +154,7 @@ const UpdateProduct = ({ product, setProduct, setShowFormUpdateProduct }) => {
             >
               {categories.map((category) => {
                 return (
-                  <option key={category._id} value={category._id}>
+                  <option key={category.id} value={category.id}>
                     {category.name}
                   </option>
                 );
@@ -243,38 +201,7 @@ const UpdateProduct = ({ product, setProduct, setShowFormUpdateProduct }) => {
             />
             <p className="update_product-form-error">{errors.salePrice}</p>
           </div>
-          <div className="update_product-form-row">
-            <span style={{ width: "30%" }}>Size</span>
-            <div
-              style={{ width: "70%" }}
-              className="update_product-form-list-size"
-            >
-              {options.map((option, index) => {
-                return (
-                  <div className="update_product-form-size-item">
-                    <input
-                      onChange={() => handleOptionChecked(index)}
-                      type="checkbox"
-                    />
-                    <span>{`${option.size}:`}</span>
-                    <input
-                      value={option.quantity}
-                      type="text"
-                      className="update_product-form-size-count"
-                      onChange={(e) => {
-                        let newOptions = [...options];
-                        let option = { ...newOptions[index] };
-                        option.quantity = Math.floor(e.target.value);
-                        newOptions[index] = option;
-                        setOptions(newOptions);
-                      }}
-                    />
-                  </div>
-                );
-              })}
-            </div>
-            <p className="update_product-form-error">{errors.size}</p>
-          </div>
+
           <div className="update_product-form-row">
             <span>Giá nhập</span>
             <input
@@ -302,7 +229,7 @@ const UpdateProduct = ({ product, setProduct, setShowFormUpdateProduct }) => {
               inputAvatarRef.current.click();
             }}
             style={{ height: 120, width: 120 }}
-            src={avatar ? URL.createObjectURL(avatar) : product.imageDisplay}
+            src={avatar ? URL.createObjectURL(avatar) : product.imageUrl}
             alt=""
           />
         </div>

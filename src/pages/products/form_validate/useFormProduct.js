@@ -68,7 +68,7 @@ const useFormProduct = (callback, product, setProduct, validate) => {
     //if no error then submit form
     e.preventDefault();
     setIsSubmiting(true);
-    //validate(values)
+
     setErrors(validate(product));
   };
 

@@ -95,7 +95,7 @@ const ProductsNavbar = ({ setRerenderProducts, handlePrint }) => {
         </StyledModal>
       </div>
 
-      <div className="row list-action-products-btn">
+      <div className=" list-action-products-btn">
         <div
           onClick={() => setShowFormAddProduct(true)}
           className="action-products-btn"
@@ -103,43 +103,6 @@ const ProductsNavbar = ({ setRerenderProducts, handlePrint }) => {
           <i class="bx bx-plus"></i>
           Thêm mới{" "}
         </div>
-        <div className="action-products-btn">
-          <input
-            accept=".xlsx, .xls"
-            onClick={(e) => {
-              e.target.value = "";
-            }}
-            onChange={handleSelectFile}
-            ref={excelRef}
-            type="file"
-            style={{ display: "none" }}
-          />
-          {showExcelIcon && (
-            <i
-              onClick={(e) => {
-                excelRef.current.click();
-              }}
-              style={{ color: "green", fontSize: 25 }}
-              class="fas fa-file-excel"
-            ></i>
-          )}
-          {!showExcelIcon && (
-            <i
-              onClick={(e) => {
-                excelRef.current.click();
-              }}
-              class="bx bxs-file-import"
-            ></i>
-          )}
-          <div onClick={handleShowModal}>Import</div>
-        </div>
-        <Dialog
-          title="Import file sản phẩm từ file excel"
-          content="Bạn có muốn import file excel này"
-          open={showDialogImport}
-          handleAction={handleImportFile}
-          handleCancel={setShowDialogImport}
-        />
 
         <div
           onClick={() => {
