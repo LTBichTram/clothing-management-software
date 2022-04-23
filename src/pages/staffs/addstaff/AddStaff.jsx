@@ -77,10 +77,6 @@ const AddStaff = ({ setShowFormAddStaff }) => {
     <div className="add_staff-container">
       <div className="add_staff-heading">
         <h3 className="add_staff-heading-title">Thêm mới nhân viên</h3>
-        <div className="add_staff-heading-info">
-          <p>Thông tin</p>
-          <div className="line-add"></div>
-        </div>
         <div onClick={onExitClick} className="add_staff-btn-exit">
           X
         </div>
