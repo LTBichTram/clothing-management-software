@@ -61,6 +61,8 @@ const UpdateProduct = ({ product, setProduct, setShowFormUpdateProduct }) => {
 
   //Submit form
   const submitForm = async () => {
+    console.log("Hello from Test");
+    console.log(product);
     // console.log(categoryId);
     const formProduct = new FormData();
     formProduct.append("categoryId", categoryId);
@@ -75,7 +77,7 @@ const UpdateProduct = ({ product, setProduct, setShowFormUpdateProduct }) => {
     //post to API
     axios
       .put(
-        `https://clothesapp123.herokuapp.com/api/products/updateProduct/${product._id}`,
+        `http://localhost:8080/api/products/update/${product.id}`,
         formProduct,
         {
           headers: {
@@ -86,7 +88,6 @@ const UpdateProduct = ({ product, setProduct, setShowFormUpdateProduct }) => {
       )
       .then((res) => {
         alert("Cập nhật sản phẩm thành công");
-        setQrImage(res.data.qrCodeUrl);
       })
       .catch((error) => {
         if (error.response) {

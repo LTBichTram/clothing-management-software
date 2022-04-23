@@ -15,7 +15,7 @@ const ProductQr = () => {
 
   useEffect(() => {
     axios
-      .get(`https://clothesapp123.herokuapp.com/api/products/listProduct`)
+      .get(`http://localhost:8080/api/products`)
       .then((res) => {
         setProducts(res.data);
       })
@@ -61,7 +61,7 @@ const ProductQr = () => {
 
                 <div className="product-qr-card-middle">
                   <b>
-                    Mã sản phẩm: {product?._id.substr(product._id.length - 10)}
+                    Mã sản phẩm: {product?.id.substr(product.id.length - 10)}
                   </b>
                   <p className="product-qr-card-middle-content">
                     {product?.name}

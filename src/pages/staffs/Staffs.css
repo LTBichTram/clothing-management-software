@@ -72,7 +72,9 @@
   font-size: 17px;
   margin-left: 10px;
 }
-
+select option {
+  margin: 20px;
+}
 .action-staff-btn {
   margin: 10px;
 }

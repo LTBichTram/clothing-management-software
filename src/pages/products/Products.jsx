@@ -171,9 +171,7 @@ const Products = () => {
   };
   const handleDeleteProduct = () => {
     axios
-      .delete(
-        `https://clothesapp123.herokuapp.com/api/products/deleteOnebyId/${selectedProduct._id}`
-      )
+      .delete(`http://localhost:8080/api/products/delete/${selectedProduct.id}`)
       .then((res) => {
         handleCloseDialog();
         alert("Xoá sản phẩm thành công");
