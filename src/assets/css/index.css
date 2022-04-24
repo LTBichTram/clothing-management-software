@@ -50,7 +50,7 @@
   box-sizing: border-box;
   transition: 0.3s all linear infinite;
   -webkit-tap-highlight-color: transparent;
-  overflow: hidden;
+  /* overflow: hidden; */
 }
 
 body {
@@ -76,6 +76,38 @@ button {
   border: 0;
   outline: 0;
   color: var(--txt-color);
+}
+
+.btn {
+  position: relative;
+  display: inline-block;
+  padding: .8rem 2.8rem;
+  font-size: 1.7rem;
+  margin-top: 1rem;
+  border-radius: .5rem;
+  font-weight: 400;
+  z-index: 0;
+}
+
+.btn::before {
+  content: '';
+  position: absolute;
+  width: 0;
+  height: 100%;
+  top: 0; right: 0;
+  background-color: var(--main-color);
+  border-radius: .5rem;
+  transition: .3s linear;
+  z-index: -1;
+}
+
+.btn:hover::before {
+  width: 100%;
+  left: 0;
+}
+
+.btn:hover {
+  color: #fff;
 }
 
 input {

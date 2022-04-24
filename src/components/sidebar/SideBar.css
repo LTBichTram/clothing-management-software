@@ -13,6 +13,7 @@
   
   /* Sidebar */
   .sidebar {
+    display:fixed;
     background: var(--main-color);
     color: white;
     height: 100vh;
