@@ -87,21 +87,44 @@ const Customers = () => {
       });
   }, [searchText]);
 
-  useEffect(() => {
-    console.log({ pointFrom, pointTo });
-    if (!pointTo) {
-      const dataPoints = defaultCustomer.filter(
-        (customer) => customer.point >= pointFrom
-      );
-      setCustomers(dataPoints);
-    } else if (!pointFrom) {
-      const dataPoints = defaultCustomer.filter(
-        (customer) => customer.point <= pointTo
-      );
-      setCustomers(dataPoints);
-    } else if (!pointFrom && !pointTo) {
+
+   useEffect(()=>{
+     if(!pointFrom && !pointTo) {
       setCustomers(defaultCustomer);
-    } else {
+     } else if(!pointFrom) {
+      const dataPoints = defaultCustomer.filter(customer => customer.point <= pointTo)
+      setCustomers(dataPoints)
+     } else if(!pointTo) {
+       const dataPoints = defaultCustomer.filter(customer => customer.point >= pointFrom)
+      setCustomers(dataPoints)
+     }
+     else{
+       axios
+         .get(`http://localhost:8080/api/customers/filterPoint?minPoint=${pointFrom}&maxPoint=${pointTo}`)
+         .then((response)=>{
+           if (response.data.length === 0) {
+             setCustomers(defaultCustomer);
+           } else {
+             setCustomers(response.data)
+           }
+         })
+         .catch((error)=>{
+         })
+     }
+   },[pointFrom, pointTo]); 
+
+
+   useEffect(()=>{
+    if(!totalPriceTo && !totalPriceFrom) {
+      setCustomers(defaultCustomer);
+    } else if(!totalPriceTo) {
+     const dataPoints = defaultCustomer.filter(customer => customer.totalPrice >= totalPriceFrom);
+     setCustomers(dataPoints)
+    } else if(!totalPriceFrom) {
+      const dataPoints = defaultCustomer.filter(customer => customer.totalPrice <= totalPriceTo);
+     setCustomers(dataPoints)
+    }
+    else{
       axios
         .get(
           `http://localhost:8080/api/customers/filterPoint?minPoint=${pointFrom}&maxPoint=${pointTo}`
@@ -285,7 +308,7 @@ const Customers = () => {
                               if (!row.point) value = 0;
                             }
                             return (
-                              <TableCell key={column.id}>
+                              <TableCell key={column.id} style={{fontSize: '16px',}}>
                                 {column.format && typeof value === "number"
                                   ? column.format(value)
                                   : value}
