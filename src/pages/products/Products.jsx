@@ -180,7 +180,7 @@ const Products = () => {
       .catch("Lỗi, xin hãy thử lại sau");
   };
   return (
-    <div className="products_container">
+    <div className="main products">
       <Dialog
         title="Xoá sản phẩm"
         content={`Bạn có muốn xoá sản phẩm: ${selectedProduct?.name} `}
@@ -203,27 +203,29 @@ const Products = () => {
           setProduct={setSelectedProduct}
         />
       </StyledModal>
-      <div style={{ marginRight: 40 }} className="div_left ">
-        <div className="clothes-category-card">
-          <div className="div_search">
-            <div className="header_search">Tìm kiếm</div>
-            <div className="search">
-              <input
-                value={searchText}
+
+      <div className="search_name">
+        <div className="search_name-wrapper">
+          <input
+            className="search_name-input"
+            id="search_name-input"
+            value={searchText}
                 onChange={(e) => {
                   setSearchText(e.target.value);
                 }}
-                type="text"
-                placeholder="Tìm theo mã, tên sản phẩm"
-              />
-
-              <i className="bx bx-search"></i>
-            </div>
-          </div>
+            placeholder="Nhập mã hoặc tên sản phẩm"
+          />
+          <label
+            htmlFor="search_name-input"
+            className="search_name-icon bx bx-search"
+          ></label>
         </div>
-        <div className="clothes-category-card">
-          <div className="div_search">
-            <div className="header_search">Thời trang</div>
+      </div>
+
+      <div className="main_list">
+        <div className="list_left">
+          <div className="card">
+            <label className="card-select-label">Thời trang:</label>
             <select
               name="category"
               onChange={handleFilterProductsByCategory}
@@ -240,14 +242,12 @@ const Products = () => {
               })}
             </select>
           </div>
+          <div className="product-btn-view-qr">
+            <Link to="/productQr">
+              <button className="product-btn-view-qr-btn">Xem mã vạch</button>
+            </Link>
+          </div>
         </div>
-
-        <div className="product-btn-view-qr">
-          <Link to="/productQr">
-            <button className="product-btn-view-qr-btn">Xem mã vạch</button>
-          </Link>
-        </div>
-      </div>
       <div className="div_right">
         <div style={{ padding: "10px 0px 10px 10px" }}>
           <Paper sx={{ width: "100%", overflow: "hidden" }}>
@@ -352,12 +352,14 @@ const Products = () => {
             />
           </Paper>
         </div>
+        
 
         <ProductsNavbar
           handlePrint={handlePrint}
           setRerenderProducts={setRerenderProducts}
         />
       </div>
+    </div>
     </div>
   );
 };

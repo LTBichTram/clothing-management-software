@@ -8,7 +8,7 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TablePagination from "@mui/material/TablePagination";
 import TableRow from "@mui/material/TableRow";
-import { ToastContainer, toast } from 'react-toastify';
+import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import axios from "axios";
 import "./Staffs.css";
@@ -51,11 +51,7 @@ const Staffs = () => {
   const [showFormAddStaff, setShowFormAddStaff] = useState(false);
   const [showFormUpdateStaff, setShowFormUpdateStaff] = useState(false);
   const [showDialogDelete, setShowDialogDelete] = useState(false);
-  const [showLogDelete, setShowLogDelete] = useState(false);
   const componentRef = useRef();
-  const handlePrint = useReactToPrint({
-    content: () => componentRef.current,
-  });
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(6);
 
@@ -102,11 +98,12 @@ const Staffs = () => {
       .post(`http://localhost:8080/api/users/delete/${selectedStaff.id}`)
       .then((res) => {
         handleCloseDialog();
-        setShowLogDelete(true)
+        toast("Xóa nhân viên thành công");
         setSelectedStaff(null);
       })
       .catch(() => {
         handleCloseDialog();
+        toast("Xóa nhân viên thất bại");
       });
   };
   
@@ -155,20 +152,7 @@ const Staffs = () => {
   }, [showFormAddStaff, showFormUpdateStaff, selectedStaff]);
 
   return (
-    <div className="staffs">
-      {showLogDelete &&
-        (<div><ToastContainer
-          position="top-right"
-          autoClose={5000}
-          hideProgressBar={false}
-          newestOnTop={false}
-          closeOnClick
-          rtl={false}
-          pauseOnFocusLoss
-          draggable
-          pauseOnHover
-          /><ToastContainer/></div>)
-      }
+    <div className="main staffs">
       <Dialog
         title="Xoá nhân viên"
         content={`Bạn có muốn xoá nhân viên: ${selectedStaff?.fullname} `}
@@ -218,13 +202,13 @@ const Staffs = () => {
           ></label>
         </div>
       </div>
-      <div className="list_staff">
+      <div className="main_list">
         <div className="list_left">
-          <div className="search_position">
-            <label className="search_position-label">Chức vụ:</label>
+          <div className="card">
+            <label className="card_select-label">Chức vụ:</label>
             <select
               onChange={searchPositionHandler}
-              className="search_position-select"
+              className="card_select"
               value={searchPosition}
             >
               <div style={{marginBottom: '10px'}}></div>

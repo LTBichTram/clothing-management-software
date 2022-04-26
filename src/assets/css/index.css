@@ -203,6 +203,156 @@ table {
 
   border-spacing: 0;
 }
+
+/* search */
+.search_name {
+  height: 46px;
+  padding-top: 30px;
+  padding-bottom: 50px;
+  background-color: #097c99;
+  background-image: linear-gradient(200deg, #005059, #bfd6d2);
+}
+
+.search_name-wrapper {
+  width: 600px;
+  margin: auto;
+  display: flex;
+  align-items: center;
+  background-color: white;
+  border-radius: 5px;
+}
+
+.search_name-input {
+  flex: 1;
+  font-size: 16px;
+  padding: 8px 6px;
+}
+
+.search_name-icon {
+  padding: 6px;
+  font-size: 23px;
+  width: 59px;
+  color: #fafafb;
+  margin-right: 2px;
+  border-radius: 3px;
+  text-align: center;
+  cursor: pointer;
+  background-image: linear-gradient(150deg, #005059, #bfd6d2);
+}
+
+/* card select */
+.card {
+  display: block;
+  font-size: 17px;
+  padding: 20px 15px;
+  box-shadow: 0 2px 15px rgb(0 0 0 / 25%);
+  border-radius: 8px;
+  background-color: #fff;
+  margin-bottom: 25px;
+  animation: fade-in-left 1.5s;
+}
+
+.card:hover {
+  box-shadow: 0 3px 15px rgb(0 102 110 / 35%);
+}
+
+.card_select-label {
+  display: block;
+  padding: 10px 10px 15px;
+  text-align: left;
+}
+
+.card_select {
+  font-size: 17px;
+  margin-left: 10px;
+  border-radius: 5px;
+  padding: 5px;
+  border: 2px solid #005059;
+  outline: 0;
+}
+
+.card_select option {
+  border: 2px solid #005059;
+
+}
+.card_select:focus option {
+  border: 2px solid #005059;
+
+}
+.card_select:focus {
+  border: 2px solid #005059;
+}
+select option {
+  margin: 20px;
+}
+
+/* card value */
+.card_value {
+  border: 1px solid #a19b9b;
+  border-radius: 8px;
+  text-align: left;
+  display: block;
+  font-size: 17px;
+  padding: 20px 15px;
+  box-shadow: 0 2px 15px rgb(0 0 0 / 25%);
+  background-color: #fff;
+  margin-bottom: 25px;
+}
+.card_value:first-child {
+  margin-bottom: 20px;
+  animation: fade-in-left 1.5s;
+}
+
+.card_value:nth-child(2) {
+  margin-bottom: 20px;
+  animation: fade-in-right 1.5s;
+}
+
+.card_value:hover {
+  box-shadow: 0 3px 15px rgb(0 102 110 / 35%);
+}
+
+.card_value-label {
+  display: block;
+  padding: 5px 5px 10px;
+}  
+
+.card_value-item {
+  padding: 6px;
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+}
+.card_value-item > .card_value-input {
+  width: 100%;
+  padding: 5px;
+
+  font-size: 14px;
+  border-bottom: 1px solid #ccc;
+}
+
+/* main list */
+.main {
+  background-color: #fafafb;
+  height: 100vh;
+}
+
+.main_list {
+  display: flex;
+  justify-content: space-around;
+  margin-top: 15px;
+  margin-left: -10px;
+  padding: 25px 10px 30px 20px;
+}
+
+.list_left {
+  text-align: center;
+}
+
+.list_right {
+  animation: fade-in-top 1.5s;
+}
+
 @media screen {
   .title-print {
     display: none;
@@ -239,7 +389,7 @@ table {
 @keyframes fade-in-top {
   from {
     opacity: 0;
-    transform: translate(0%, -25%);
+    transform: translate(0%, -15%);
   }
   to {
     transform: translate(0, 0);

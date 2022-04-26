@@ -172,7 +172,7 @@ const Customers = () => {
   }, [totalPriceFrom, totalPriceTo]);
 
   return (
-    <div className="customers">
+    <div className="main customers">
       <div className="search_name">
         <div className="search_name-wrapper">
           <input
@@ -188,15 +188,15 @@ const Customers = () => {
           ></label>
         </div>
       </div>
-      <div className="list_customer">
+      <div className="main_list">
         <div className="list_left">
-          <div className="customer-card">
-            <label className="customer-card-label">Điểm tích lũy:</label>
-            <div className="customer-card-body">
-              <div className="customer-card-item">
+          <div className="card_value">
+            <label className="card_value-label">Điểm tích lũy:</label>
+            <div className="card_value-body">
+              <div className="card_value-item">
                 <span>Từ</span>
                 <input
-                  className="customer-card-input"
+                  className="card_value-input"
                   placeholder="Giá trị"
                   type="number"
                   value={pointFrom}
@@ -208,10 +208,10 @@ const Customers = () => {
                   }}
                 />
               </div>
-              <div className="customer-card-item">
+              <div className="card_value-item">
                 <span>Đến</span>
                 <input
-                  className="customer-card-input"
+                  className="card_value-input"
                   placeholder="Giá trị"
                   type="number"
                   value={pointTo}
@@ -222,13 +222,13 @@ const Customers = () => {
               </div>
             </div>
           </div>
-          <div className="customer-card">
-            <label className="customer-card-label">Tổng tiền:</label>
-            <div className="customer-card-body">
-              <div className="customer-card-item">
+          <div className="card_value">
+            <label className="card_value-label">Tổng tiền:</label>
+            <div className="card_value-body">
+              <div className="card_value-item">
                 <span>Từ</span>
                 <input
-                  className="customer-card-input"
+                  className="card_value-input"
                   placeholder="Giá trị"
                   type="number"
                   value={totalPriceFrom}
@@ -237,10 +237,10 @@ const Customers = () => {
                   }}
                 />
               </div>
-              <div className="customer-card-item">
+              <div className="card_value-item">
                 <span>Đến</span>
                 <input
-                  className="customer-card-input"
+                  className="card_value-input"
                   placeholder="Giá trị"
                   type="number"
                   value={totalPriceTo}
