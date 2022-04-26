@@ -5,6 +5,7 @@ import axios from "axios";
 
 import validateProduct from "../form_validate/validateProduct";
 import useFormProduct from "../form_validate/useFormProduct";
+import { toast } from "react-toastify";
 
 const UpdateProduct = ({ product, setProduct, setShowFormUpdateProduct }) => {
   const inputAvatarRef = useRef(null);
@@ -87,11 +88,11 @@ const UpdateProduct = ({ product, setProduct, setShowFormUpdateProduct }) => {
         }
       )
       .then((res) => {
-        alert("Cập nhật sản phẩm thành công");
+        toast("Cập nhật sản phẩm thành công");
       })
       .catch((error) => {
         if (error.response) {
-          alert("Cập nhật sản phẩm thất bại");
+          toast("Cập nhật sản phẩm thất bại");
 
           console.log(error.response.data);
         }

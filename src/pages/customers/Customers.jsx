@@ -35,7 +35,7 @@ const columns = [
 ];
 
 const Customers = () => {
-  const [customers, setCustomers] = useState([])
+  const [customers, setCustomers] = useState([]);
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
   const [pointFrom, setPointFrom] = React.useState();
@@ -59,31 +59,33 @@ const Customers = () => {
   };
 
   useEffect(() => {
-    axios.get(`http://localhost:8080/api/customers`)
-      .then(res => {
-        setDefaultCustomer(res.data)
-        setCustomers(res.data)
-      }).catch(err=>{
-        console.log(err.response.data)
+    axios
+      .get(`http://localhost:8080/api/customers`)
+      .then((res) => {
+        setDefaultCustomer(res.data);
+        setCustomers(res.data);
       })
-  },[])
+      .catch((err) => {
+        console.log(err.response.data);
+      });
+  }, []);
 
   // Search by strings
   const handleSearch = (e) => {
     setSearchText(e.target.value);
   };
 
-  useEffect(()=>{
+  useEffect(() => {
     //Call api and get data
     axios
       .get(`http://localhost:8080/api/customers/filter?key=${searchText}`)
-      .then((response)=>{
-        setCustomers(response.data)
+      .then((response) => {
+        setCustomers(response.data);
       })
-      .catch((error)=>{
+      .catch((error) => {
         console.log(error.response.data);
-      })
-   },[searchText]) 
+      });
+  }, [searchText]);
 
 
    useEffect(()=>{
@@ -124,19 +126,51 @@ const Customers = () => {
     }
     else{
       axios
-        .get(`http://localhost:8080/api/customers/filterTotalPrice?minTotal=${totalPriceFrom}&maxTotal=${totalPriceTo}`)
-        .then((response)=>{
+        .get(
+          `http://localhost:8080/api/customers/filterPoint?minPoint=${pointFrom}&maxPoint=${pointTo}`
+        )
+        .then((response) => {
           if (response.data.length === 0) {
             setCustomers(defaultCustomer);
           } else {
-            setCustomers(response.data)
+            setCustomers(response.data);
           }
         })
-        .catch((error)=>{
-        })
+        .catch((error) => {});
     }
-  },[totalPriceFrom, totalPriceTo]); 
-  
+  }, [pointFrom, pointTo]);
+
+  useEffect(() => {
+    console.log({ totalPriceFrom, totalPriceTo });
+    if (!totalPriceFrom) {
+      const dataPoints = defaultCustomer.filter(
+        (customer) => customer.totalPrice >= totalPriceFrom
+      );
+      setCustomers(dataPoints);
+    } else if (!totalPriceTo) {
+      const dataPoints = defaultCustomer.filter(
+        (customer) => customer.totalPrice >= totalPriceFrom
+      );
+      console.log(dataPoints);
+      setCustomers(dataPoints);
+    } else if (!totalPriceTo && !totalPriceFrom) {
+      setCustomers(defaultCustomer);
+    } else {
+      axios
+        .get(
+          `http://localhost:8080/api/customers/filterTotalPrice?minTotal=${totalPriceFrom}&maxTotal=${totalPriceTo}`
+        )
+        .then((response) => {
+          if (response.data.length === 0) {
+            setCustomers(defaultCustomer);
+          } else {
+            setCustomers(response.data);
+          }
+        })
+        .catch((error) => {});
+    }
+  }, [totalPriceFrom, totalPriceTo]);
+
   return (
     <div className="customers">
       <div className="search_name">
@@ -186,46 +220,46 @@ const Customers = () => {
                   }}
                 />
               </div>
-            </div> 
+            </div>
           </div>
           <div className="customer-card">
-              <label className="customer-card-label">Tổng tiền:</label>
-              <div className="customer-card-body">
-                <div className="customer-card-item">
-                  <span>Từ</span>
-                  <input
-                    className="customer-card-input"
-                    placeholder="Giá trị"
-                    type="number"
-                    value={totalPriceFrom}
-                    onChange={(e) => {
-                      setTotalPriceFrom(e.target.value);
-                    }}
-                  />
-                </div>
-                <div className="customer-card-item">
-                  <span>Đến</span>
-                  <input
-                    className="customer-card-input"
-                    placeholder="Giá trị"
-                    type="number"
-                    value={totalPriceTo}
-                    onChange={(e) => {
-                      setTotalPriceTo(e.target.value);
-                    }}
-                  />
-                </div>
+            <label className="customer-card-label">Tổng tiền:</label>
+            <div className="customer-card-body">
+              <div className="customer-card-item">
+                <span>Từ</span>
+                <input
+                  className="customer-card-input"
+                  placeholder="Giá trị"
+                  type="number"
+                  value={totalPriceFrom}
+                  onChange={(e) => {
+                    setTotalPriceFrom(e.target.value);
+                  }}
+                />
+              </div>
+              <div className="customer-card-item">
+                <span>Đến</span>
+                <input
+                  className="customer-card-input"
+                  placeholder="Giá trị"
+                  type="number"
+                  value={totalPriceTo}
+                  onChange={(e) => {
+                    setTotalPriceTo(e.target.value);
+                  }}
+                />
               </div>
             </div>
-            <div className="print_file-btn">
-              <button className="btn" onClick={() => handlePrint()}>
-                <i class='bx bx-export'></i>
-                Xuất file
-              </button>
-            </div>
+          </div>
+          <div className="print_file-btn">
+            <button className="btn" onClick={() => handlePrint()}>
+              <i class="bx bx-export"></i>
+              Xuất file
+            </button>
+          </div>
         </div>
         <div className="list_right">
-        <Paper sx={{ width: "100%", overflow: "hidden" }}>
+          <Paper sx={{ width: "100%", overflow: "hidden" }}>
             <TableContainer sx={{ maxHeight: 440 }}>
               <Table ref={componentRef} stickyHeader aria-label="sticky table">
                 <TableHead>
@@ -236,9 +270,10 @@ const Customers = () => {
                         align={column.align}
                         style={{
                           minWidth: column.minWidth,
-                          backgroundImage: "-webkit-linear-gradient(90deg, #fd501b, #ff861a)",
+                          backgroundImage:
+                            "-webkit-linear-gradient(90deg, #fd501b, #ff861a)",
                           color: "#fff",
-                          fontSize: '17px',
+                          fontSize: "17px",
                           fontWeight: "bold",
                         }}
                       >
@@ -257,7 +292,9 @@ const Customers = () => {
                           role="checkbox"
                           key={row.code}
                           style={
-                            index % 2 === 1 ? { backgroundColor: "#ff861a24" } : {}
+                            index % 2 === 1
+                              ? { backgroundColor: "#ff861a24" }
+                              : {}
                           }
                         >
                           {columns.map((column) => {
