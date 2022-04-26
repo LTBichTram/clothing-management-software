@@ -2,24 +2,30 @@
   border: 1px solid #ddd;
   background-color: #fff;
   padding-bottom: 30px;
+  border: 0.2rem solid #005059;
+  border-radius:95% 4% 97% 5%/4% 94% 3% 95%;
+  overflow: hidden;
 }
 .update_staff-heading {
-  position: relative;
-  color: white;
-  height: 90px;
-  background-color: #62b4ff;
   display: flex;
-  flex-direction: column;
-  justify-content: center;
-  padding-left: 30px;
+  background-image: linear-gradient(120deg, #005059, #bfd6d2);
+  align-items: center;
+  justify-content: space-between;
+  padding: 30px;
+  height: 90px;
 }
+
+.update_staff-heading-title {
+  background: -webkit-linear-gradient(120deg, #eee, #e07116);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
 .update_staff-body {
   display: flex;
   padding: 30px 0;
 }
-.update_staff-heading-tittle {
-  font-size: 20px;
-}
+
 .update_staff-heading-info {
   font-size: 15px;
   position: absolute;
@@ -37,14 +43,20 @@
   background-color: #310ebb;
 }
 .update_staff-btn-exit {
-  width: 15px;
-  height: 15px;
-  background-color: #62b4ff;
-  position: absolute;
-  right: 0;
-  top: 0;
-  margin: 15px;
+  width: 40px;
+  height: 40px;
+  font-size: 28px;
+  line-height: 40px;
+  text-align: center;
+  border-radius: 50%;
+  background-color: white;
   cursor: pointer;
+}
+
+.update_staff-btn-exit:hover {
+  background-color: rgb(255, 227, 209);
+  transform: rotate(90deg);
+  transition: .2s linear;
 }
 
 .update_staff_img {
@@ -130,10 +142,26 @@
   color: white;
   background-color: #4cb050;
 }
+
+.update_staff-btn-save {
+  width: 100px;
+  height: 40px;
+  margin-right: 20px;
+  border-radius: 5px;
+  color: white;
+  background-color: #fc8b2f;
+}
+.update_staff-btn-save:hover {
+  background-color: #fd501b;
+}
 .update_staff-btn-cancel {
   width: 100px;
   height: 40px;
   border-radius: 5px;
   color: white;
-  background-color: #898c8d;
+  background-color: #a0a2a3;
+}
+
+.update_staff-btn-cancel:hover {
+  background-color: #777777;
 }

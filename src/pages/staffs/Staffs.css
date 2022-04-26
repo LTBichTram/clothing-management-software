@@ -40,19 +40,16 @@
 .list_staff {
   display: flex;
   justify-content: space-around;
-  margin-top: -10px;
+  margin-top: 15px;
   margin-left: -10px;
   padding: 25px 10px 30px 20px;
 }
 
 .search_position {
+  display: block;
   font-size: 17px;
-  margin-bottom: 20px;
-  padding: 25px 20px;
-  border-top: 1px solid rgb(0, 58, 146);
-  border-left: 1px solid rgb(0, 58, 146);
-  border-right: 1px solid rgb(0, 58, 146);
-  box-shadow: 0 2px 15px rgb(0 0 0 / 15%);
+  padding: 20px 15px;
+  box-shadow: 0 2px 15px rgb(0 0 0 / 25%);
   border-radius: 8px;
   background-color: #fff;
   margin-bottom: 25px;
@@ -65,34 +62,47 @@
 
 .search_position-label {
   display: block;
-  padding: 10px;
+  padding: 10px 10px 15px;
 }
 
 .search_position-select {
   font-size: 17px;
   margin-left: 10px;
+  border-radius: 5px;
+  padding: 5px;
+  border: 2px solid #005059;
+  outline: 0;
+}
+
+.search_position-select option {
+  border: 2px solid #005059;
+
+}
+.search_position-select:focus option {
+  border: 2px solid #005059;
+
+}
+.search_position-select:focus {
+  border: 2px solid #005059;
 }
 select option {
   margin: 20px;
 }
 .action-staff-btn {
   margin: 10px;
+  margin-top: 45px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 .action-staff-btn > button {
   cursor: pointer;
-
-  display: flex;
-  align-items: center;
   font-weight: bold;
   padding: 10px 20px;
   color: #fff;
   border-radius: 5px;
-  background-color: rgb(3, 169, 244);
+  background-image: linear-gradient(150deg, #005059, #3491a8);
   font-size: 18px;
-}
-
-.list_right {
-  margin-top: 20px;
 }
 
 @keyframes fade-in-ani {
@@ -144,23 +154,13 @@ select option {
   color: var(--txt-color);
 }
 .action-staff-btn {
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+  text-align: center;
 }
-.action-staff-btn > button {
-  cursor: pointer;
 
-  display: flex;
-  align-items: center;
-  font-weight: bold;
-  padding: 10px 20px;
-  color: #fff;
-  border-radius: 5px;
-  background-color: rgb(3, 169, 244);
-  font-size: 18px;
+i.bx.bx-plus {
+  margin-right: 6px;
 }
+
 .selectbox {
   width: 200px;
   height: 40px;
@@ -181,39 +181,7 @@ select option {
   }
 }
 
-#staffs {
-  font-family: Arial, Helvetica, sans-serif;
-  border-collapse: collapse;
-  width: 100%;
+.css-1fw5qro-MuiPaper-root {
+  box-shadow: 0 2px 15px rgb(0 0 0 / 25%) !important;
 }
 
-#staffs td,
-#staffs th {
-  border: 1px solid #ddd;
-  padding: 8px;
-}
-
-#staffs tr:nth-child(even) {
-  background-color: #f2f2f2;
-}
-
-#staffs tr:hover {
-  background-color: #ddd;
-}
-
-#staffs th {
-  padding-top: 12px;
-  padding-bottom: 12px;
-  text-align: left;
-  background-color: var(--add-color);
-  color: white;
-  text-align: center;
-}
-
-#staffs td {
-  text-align: center;
-}
-
-#staffs td.gender {
-  text-transform: capitalize;
-}

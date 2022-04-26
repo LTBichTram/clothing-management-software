@@ -75,13 +75,7 @@ const UpdateStaff = ({ staff, setStaff, setShowFormUpdateStaff }) => {
         <h3 className="update_staff-heading-title">
           Cập nhật thông tin nhân viên
         </h3>
-        <div className="update_staff-heading-info">
-          <p>Thông tin</p>
-          <div className="line-add"></div>
-        </div>
-        <div onClick={onExitClick} className="update_staff-btn-exit">
-          X
-        </div>
+        <div onClick={onExitClick} className="bx bx-x update_staff-btn-exit"></div>
       </div>
       <div className="update_staff-body">
         <div className="update_staff_img">
