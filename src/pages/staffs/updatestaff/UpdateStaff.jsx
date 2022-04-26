@@ -1,6 +1,8 @@
 import React, { useState, useRef } from "react";
 import "./updatestaff.css";
+import { ToastContainer, toast } from "react-toastify";
 
+import "react-toastify/dist/ReactToastify.css";
 import TextField from "@mui/material/TextField";
 import AdapterDateFns from "@mui/lab/AdapterDateFns";
 import LocalizationProvider from "@mui/lab/LocalizationProvider";
@@ -10,18 +12,14 @@ import validateUpdateStaff from "../form_validate/validateUpdateStaff";
 import axios from "axios";
 
 const UpdateStaff = ({ staff, setStaff, setShowFormUpdateStaff }) => {
-  
-  
-  
   const inputAvatarRef = useRef(null);
 
-  
   //Call API
   const submitForm = () => {
     var formStaff = new FormData();
     console.log(staff.position);
     formStaff.append("username", staff.username);
-   
+
     formStaff.append("fullname", staff.fullname);
     formStaff.append("address", staff.address);
     formStaff.append("birthday", new Date(staff.birthday));
@@ -29,12 +27,11 @@ const UpdateStaff = ({ staff, setStaff, setShowFormUpdateStaff }) => {
     formStaff.append("position", staff.position);
     formStaff.append("email", staff.email);
     formStaff.append("phone", staff.phone);
-    console.log(avatar)
-    if(avatar){
+    console.log(avatar);
+    if (avatar) {
       formStaff.append("image", avatar);
-
     }
-   
+
     //post to API
     axios
       .put(
@@ -49,7 +46,7 @@ const UpdateStaff = ({ staff, setStaff, setShowFormUpdateStaff }) => {
         { timeout: 1000 }
       )
       .then((res) => {
-        alert("Cập nhật nhân viên thành công");
+        toast("Cập nhật nhân viên thành công");
         setShowFormUpdateStaff(false);
       })
       .catch((err) => {
@@ -75,7 +72,10 @@ const UpdateStaff = ({ staff, setStaff, setShowFormUpdateStaff }) => {
         <h3 className="update_staff-heading-title">
           Cập nhật thông tin nhân viên
         </h3>
-        <div onClick={onExitClick} className="bx bx-x update_staff-btn-exit"></div>
+        <div
+          onClick={onExitClick}
+          className="bx bx-x update_staff-btn-exit"
+        ></div>
       </div>
       <div className="update_staff-body">
         <div className="update_staff_img">
@@ -102,7 +102,11 @@ const UpdateStaff = ({ staff, setStaff, setShowFormUpdateStaff }) => {
         <div className="update_staff-form">
           <div className="update_staff-form-row">
             <span>Mã nhân viên</span>
-            <input name="username" value={staff.id.substr(staff.id.length - 7)} type="text" />
+            <input
+              name="username"
+              value={staff.id.substr(staff.id.length - 7)}
+              type="text"
+            />
             <p className="update_staff-form-error">{errors.username}</p>
           </div>
           <div className="update_staff-form-row">
