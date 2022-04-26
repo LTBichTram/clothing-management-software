@@ -213,3 +213,25 @@ table {
     display: none;
   }
 }
+
+@keyframes fade-in-left {
+  from {
+    opacity: 0;
+    transform: translateX(-25%, 0%);
+  }
+  to {
+    transform: translateX(0, 0);
+    opacity: 1;
+  }
+}
+
+@keyframes fade-in-right {
+  from {
+    opacity: 0;
+    transform: translateX(0%, -25%);
+  }
+  to {
+    transform: translateX(0, 0);
+    opacity: 1;
+  }
+}

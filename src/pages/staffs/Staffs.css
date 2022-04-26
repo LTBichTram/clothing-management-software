@@ -1,5 +1,6 @@
 .staffs {
   background-color: #fafafb;
+  height: 100vh;
 }
 
 .search_name {
@@ -105,17 +106,6 @@ select option {
   font-size: 18px;
 }
 
-@keyframes fade-in-ani {
-  from {
-    opacity: 0;
-    transform: translate(0, -25%);
-  }
-  to {
-    transform: translate(0, 0%);
-    opacity: 1;
-  }
-}
-
 .div_search {
   width: 224px;
   height: 125px;
@@ -159,26 +149,6 @@ select option {
 
 i.bx.bx-plus {
   margin-right: 6px;
-}
-
-.selectbox {
-  width: 200px;
-  height: 40px;
-  margin-left: 15px;
-  margin-top: 20px;
-  border: none;
-  border-bottom: 1px solid #a19b9b;
-}
-
-@keyframes fade-in-ani {
-  from {
-    opacity: 0;
-    transform: translate(0, -25%);
-  }
-  to {
-    transform: translate(0, 0%);
-    opacity: 1;
-  }
 }
 
 .css-1fw5qro-MuiPaper-root {
