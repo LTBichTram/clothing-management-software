@@ -155,7 +155,7 @@ const Staffs = () => {
   }, [showFormAddStaff, showFormUpdateStaff, selectedStaff]);
 
   return (
-    <div className="staff">
+    <div className="staffs">
       {showLogDelete &&
         (<div><ToastContainer
           position="top-right"
