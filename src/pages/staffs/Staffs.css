@@ -86,7 +86,9 @@
 .search_position-select:focus {
   border: 2px solid #005059;
 }
-
+select option {
+  margin: 20px;
+}
 .action-staff-btn {
   margin: 10px;
   margin-top: 45px;
