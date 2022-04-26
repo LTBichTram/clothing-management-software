@@ -1,5 +1,4 @@
 import React, { useEffect, useState, useRef } from "react";
-import CustomersNavbar from "./customer_navbar/CustomersNavbar";
 import Paper from "@mui/material/Paper";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
@@ -15,7 +14,7 @@ import { useReactToPrint } from "react-to-print";
 import "./Customers.css";
 
 const columns = [
-  { id: "_id", label: "Mã Khách hàng" },
+  { id: "id", label: "Mã Khách hàng" },
   { id: "name", label: "Tên khách hàng" },
   {
     id: "phone",
@@ -35,38 +34,15 @@ const columns = [
   },
 ];
 
-const customerDf = [
-  {
-    _id: "0",
-    name: "None",
-    phone: "None",
-    totalPrice: 0,
-    point: 0,
-    listOrders: [
-      {
-        _id: "619c9d1721a22da06c29d64f",
-        orderTotal: 0,
-        status: "Đã Thanh Toán",
-      },
-      {
-        _id: "619ca172aaa5d9d88be153e5",
-        orderTotal: 0,
-        status: "Đã Thanh Toán",
-      },
-    ],
-  },
-];
-
 const Customers = () => {
-  const [customers, setCustomers] = useState(customerDf);
-  const [rerenderCustomers, setRerenderCustomers] = useState(false);
+  const [customers, setCustomers] = useState([])
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
-  const [pointFrom, setPointFrom] = React.useState("");
-  const [pointTo, setPointTo] = React.useState("");
-  const [totalPriceFrom, setTotalPriceFrom] = React.useState("");
-  const [totalPriceTo, setTotalPriceTo] = React.useState("");
-  const [SearchInput, setSearchInput] = React.useState("");
+  const [pointFrom, setPointFrom] = React.useState();
+  const [pointTo, setPointTo] = React.useState();
+  const [totalPriceFrom, setTotalPriceFrom] = React.useState();
+  const [totalPriceTo, setTotalPriceTo] = React.useState();
+  const [searchText, setSearchText] = useState("");
   const [defaultCustomer, setDefaultCustomer] = React.useState([]);
   const componentRef = useRef();
   const handlePrint = useReactToPrint({
@@ -76,178 +52,124 @@ const Customers = () => {
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
   };
-  // Render First time
-  useEffect(async () => {
-    console.log("Chạy USe effect");
-    await axios
-      .get("http://localhost:8080/api/customers")
-      .then(async (res) => {
-        console.log(res.data);
-        CalculateTotalPrice(res.data);
-      })
-      .catch((err) => {
-        console.log(err.res);
-      });
-  }, [rerenderCustomers]);
 
   const handleChangeRowsPerPage = (event) => {
     setRowsPerPage(+event.target.value);
     setPage(0);
   };
 
+  useEffect(() => {
+    axios.get(`http://localhost:8080/api/customers`)
+      .then(res => {
+        setDefaultCustomer(res.data)
+        setCustomers(res.data)
+      }).catch(err=>{
+        console.log(err.response.data)
+      })
+  },[])
+
   // Search by strings
-  const handleSearch = (searchInput) => {
-    setSearchInput(searchInput);
-    console.log(totalPriceFrom.replace(/[^0-9]/g, ""));
-    console.log("Search working...");
-    const customersFilter = defaultCustomer.filter((customer) => {
-      console.log("Chạy filter");
-      return (
-        (customer.name.toLowerCase().indexOf(searchInput.toLowerCase()) > -1 ||
-          customer._id.toLowerCase().indexOf(searchInput.toLowerCase()) > -1 ||
-          customer.phone.toLowerCase().indexOf(searchInput.toLowerCase()) >
-            -1 ||
-          String(customer.point).indexOf(searchInput.toLowerCase()) > -1) &&
-        customer.totalPrice - 1 <
-          Number(
-            totalPriceTo.replace(/[^0-9]/g, "") == ""
-              ? Number.MAX_VALUE
-              : totalPriceTo.replace(/[^0-9]/g, "")
-          ) &&
-        customer.totalPrice + 1 >
-          Number(
-            totalPriceFrom.replace(/[^0-9]/g, "") == ""
-              ? Number.MIN_VALUE
-              : totalPriceFrom.replace(/[^0-9]/g, "")
-          ) &&
-        customer.point - 1 <
-          Number(
-            pointTo.replace(/[^0-9]/g, "") == ""
-              ? Number.MAX_VALUE
-              : pointTo.replace(/[^0-9]/g, "")
-          ) &&
-        customer.point + 1 >
-          Number(
-            pointFrom.replace(/[^0-9]/g, "") == ""
-              ? Number.MIN_VALUE
-              : pointFrom.replace(/[^0-9]/g, "")
-          )
-      );
-    });
-    setCustomers(customersFilter);
-  };
-  //Search by point
-  const handleSearchByPoint = (pointFrom, pointTo) => {
-    console.log("Search Point working...");
-    const customerbyPoint = defaultCustomer.filter((customer) => {
-      return (
-        (customer.name.toLowerCase().indexOf(SearchInput.toLowerCase()) > -1 ||
-          customer._id.toLowerCase().indexOf(SearchInput.toLowerCase()) > -1 ||
-          customer.phone.toLowerCase().indexOf(SearchInput.toLowerCase()) >
-            -1 ||
-          String(customer.point).indexOf(SearchInput.toLowerCase()) > -1) &&
-        customer.totalPrice - 1 <
-          Number(
-            totalPriceTo.replace(/[^0-9]/g, "") == ""
-              ? Number.MAX_VALUE
-              : totalPriceTo.replace(/[^0-9]/g, "")
-          ) &&
-        customer.totalPrice + 1 >
-          Number(
-            totalPriceFrom.replace(/[^0-9]/g, "") == ""
-              ? Number.MIN_VALUE
-              : totalPriceFrom.replace(/[^0-9]/g, "")
-          ) &&
-        customer.point - 1 <
-          Number(
-            pointTo.replace(/[^0-9]/g, "") == ""
-              ? Number.MAX_VALUE
-              : pointTo.replace(/[^0-9]/g, "")
-          ) &&
-        customer.point + 1 >
-          Number(
-            pointFrom.replace(/[^0-9]/g, "") == ""
-              ? Number.MIN_VALUE
-              : pointFrom.replace(/[^0-9]/g, "")
-          )
-      );
-    });
-    setCustomers(customerbyPoint);
-  };
-  // Function calculate total price of customer
-  const CalculateTotalPrice = (customers) => {
-    console.log("Chạy total price");
-    customers.forEach((customer) => {
-      console.log("Vòng Ngoài");
-      var total = 0;
-      customer.listOrders.forEach((value) => {
-        console.log("Vòng Trong");
-        if (value.status == "Đã thanh toán") total += value.orderTotal;
-      });
-      console.log("Total Price:");
-      console.log(total);
-      customer["totalPrice"] = total;
-    });
-    setCustomers(customers);
-    setDefaultCustomer(customers);
-  };
-  // Search by total price
-  const handleSearchByTotalPrice = (totalPriceFrom, totalPriceTo) => {
-    console.log("Search totalPrice working...");
-    const customerbytotalPrice = defaultCustomer.filter((customer) => {
-      return (
-        (customer.name.toLowerCase().indexOf(SearchInput.toLowerCase()) > -1 ||
-          customer._id.toLowerCase().indexOf(SearchInput.toLowerCase()) > -1 ||
-          customer.phone.toLowerCase().indexOf(SearchInput.toLowerCase()) >
-            -1 ||
-          String(customer.point).indexOf(SearchInput.toLowerCase()) > -1) &&
-        customer.totalPrice - 1 <
-          Number(
-            totalPriceTo.replace(/[^0-9]/g, "") == ""
-              ? Number.MAX_VALUE
-              : totalPriceTo.replace(/[^0-9]/g, "")
-          ) &&
-        customer.totalPrice + 1 >
-          Number(
-            totalPriceFrom.replace(/[^0-9]/g, "") == ""
-              ? Number.MIN_VALUE
-              : totalPriceFrom.replace(/[^0-9]/g, "")
-          ) &&
-        customer.point - 1 <
-          Number(
-            pointTo.replace(/[^0-9]/g, "") == ""
-              ? Number.MAX_VALUE
-              : pointTo.replace(/[^0-9]/g, "")
-          ) &&
-        customer.point + 1 >
-          Number(
-            pointFrom.replace(/[^0-9]/g, "") == ""
-              ? Number.MIN_VALUE
-              : pointFrom.replace(/[^0-9]/g, "")
-          )
-      );
-    });
-    setCustomers(customerbytotalPrice);
+  const handleSearch = (e) => {
+    setSearchText(e.target.value);
   };
 
+  useEffect(()=>{
+    //Call api and get data
+    axios
+      .get(`http://localhost:8080/api/customers/filter?key=${searchText}`)
+      .then((response)=>{
+        setCustomers(response.data)
+      })
+      .catch((error)=>{
+        console.log(error.response.data);
+      })
+   },[searchText]) 
+
+
+   useEffect(()=>{
+    console.log({pointFrom, pointTo})
+     if(!pointTo) {
+      const dataPoints = defaultCustomer.filter(customer => customer.point >= pointFrom)
+      setCustomers(dataPoints)
+     } else if(!pointFrom) {
+      const dataPoints = defaultCustomer.filter(customer => customer.point <= pointTo)
+      setCustomers(dataPoints)
+     } else if(!pointFrom && !pointTo) {
+       setCustomers(defaultCustomer);
+     }
+     else{
+       axios
+         .get(`http://localhost:8080/api/customers/filterPoint?minPoint=${pointFrom}&maxPoint=${pointTo}`)
+         .then((response)=>{
+           if (response.data.length === 0) {
+             setCustomers(defaultCustomer);
+           } else {
+             setCustomers(response.data)
+           }
+         })
+         .catch((error)=>{
+         })
+     }
+   },[pointFrom, pointTo]); 
+
+
+   useEffect(()=>{
+     console.log({totalPriceFrom, totalPriceTo})
+    if(!totalPriceFrom) {
+     const dataPoints = defaultCustomer.filter(customer => customer.totalPrice >= totalPriceFrom);
+     setCustomers(dataPoints)
+    } else if(!totalPriceTo) {
+     const dataPoints = defaultCustomer.filter(customer => customer.totalPrice <= totalPriceTo);
+     setCustomers(dataPoints)
+    } else if(!totalPriceTo && !totalPriceFrom) {
+      setCustomers(defaultCustomer);
+    }
+    else{
+      axios
+        .get(`http://localhost:8080/api/customers/filterTotalPrice?minTotal=${totalPriceFrom}&maxTotal=${totalPriceTo}`)
+        .then((response)=>{
+          if (response.data.length === 0) {
+            setCustomers(defaultCustomer);
+          } else {
+            setCustomers(response.data)
+          }
+        })
+        .catch((error)=>{
+        })
+    }
+  },[totalPriceFrom, totalPriceTo]); 
+  
   return (
-    <div>
-      <CustomersNavbar handlePrint={handlePrint} handleSearch={handleSearch} />
-      <div className="row customers_content">
-        <div className="col-3">
+    <div className="customers">
+      <div className="search_name">
+        <div className="search_name-wrapper">
+          <input
+            className="search_name-input"
+            id="search_name-input"
+            value={searchText}
+            onChange={handleSearch}
+            placeholder="Nhập tên hoặc SĐT khách hàng"
+          />
+          <label
+            htmlFor="search_name-input"
+            className="search_name-icon bx bx-search"
+          ></label>
+        </div>
+      </div>
+      <div className="list_customer">
+        <div className="list_left">
           <div className="customer-card">
-            <h3 className="customer-card-heading">Điểm tích luỹ</h3>
+            <label className="customer-card-label">Điểm tích lũy:</label>
             <div className="customer-card-body">
               <div className="customer-card-item">
                 <span>Từ</span>
                 <input
                   className="customer-card-input"
                   placeholder="Giá trị"
-                  type="text"
+                  type="number"
                   value={pointFrom}
                   onChange={(e) => {
                     setPointFrom(e.target.value);
-                    handleSearchByPoint(e.target.value, pointTo);
                   }}
                   onBlur={(e) => {
                     e.preventDefault();
@@ -259,51 +181,53 @@ const Customers = () => {
                 <input
                   className="customer-card-input"
                   placeholder="Giá trị"
-                  type="text"
+                  type="number"
                   value={pointTo}
                   onChange={(e) => {
                     setPointTo(e.target.value);
-
-                    handleSearchByPoint(pointFrom, e.target.value);
                   }}
                 />
               </div>
-            </div>
+            </div> 
           </div>
           <div className="customer-card">
-            <h3 className="customer-card-heading">Tổng tiền</h3>
-            <div className="customer-card-body">
-              <div className="customer-card-item">
-                <span>Từ</span>
-                <input
-                  className="customer-card-input"
-                  placeholder="Giá trị"
-                  type="text"
-                  value={totalPriceFrom}
-                  onChange={(e) => {
-                    setTotalPriceFrom(e.target.value);
-                    handleSearchByTotalPrice(e.target.value, totalPriceTo);
-                  }}
-                />
-              </div>
-              <div className="customer-card-item">
-                <span>Đến</span>
-                <input
-                  className="customer-card-input"
-                  placeholder="Giá trị"
-                  type="text"
-                  value={totalPriceTo}
-                  onChange={(e) => {
-                    setTotalPriceTo(e.target.value);
-                    handleSearchByTotalPrice(totalPriceFrom, e.target.value);
-                  }}
-                />
+              <label className="customer-card-label">Tổng tiền:</label>
+              <div className="customer-card-body">
+                <div className="customer-card-item">
+                  <span>Từ</span>
+                  <input
+                    className="customer-card-input"
+                    placeholder="Giá trị"
+                    type="number"
+                    value={totalPriceFrom}
+                    onChange={(e) => {
+                      setTotalPriceFrom(e.target.value);
+                    }}
+                  />
+                </div>
+                <div className="customer-card-item">
+                  <span>Đến</span>
+                  <input
+                    className="customer-card-input"
+                    placeholder="Giá trị"
+                    type="number"
+                    value={totalPriceTo}
+                    onChange={(e) => {
+                      setTotalPriceTo(e.target.value);
+                    }}
+                  />
+                </div>
               </div>
             </div>
-          </div>
+            <div className="print_file-btn">
+              <button className="btn" onClick={() => handlePrint()}>
+                <i class='bx bx-export'></i>
+                Xuất file
+              </button>
+            </div>
         </div>
-        <div className="col-9" style={{ padding: "10px 0px 10px 10px" }}>
-          <Paper sx={{ width: "100%", overflow: "hidden" }}>
+        <div className="list_right">
+        <Paper sx={{ width: "100%", overflow: "hidden" }}>
             <TableContainer sx={{ maxHeight: 440 }}>
               <Table ref={componentRef} stickyHeader aria-label="sticky table">
                 <TableHead>
@@ -314,8 +238,9 @@ const Customers = () => {
                         align={column.align}
                         style={{
                           minWidth: column.minWidth,
-                          backgroundColor: "#03a9f4",
+                          backgroundImage: "-webkit-linear-gradient(90deg, #fd501b, #ff861a)",
                           color: "#fff",
+                          fontSize: '17px',
                           fontWeight: "bold",
                         }}
                       >
@@ -334,7 +259,7 @@ const Customers = () => {
                           role="checkbox"
                           key={row.code}
                           style={
-                            index % 2 == 1 ? { backgroundColor: "#e8e8e8" } : {}
+                            index % 2 === 1 ? { backgroundColor: "#ff861a24" } : {}
                           }
                         >
                           {columns.map((column) => {
@@ -363,7 +288,7 @@ const Customers = () => {
             </TableContainer>
             <TablePagination
               labelRowsPerPage="Số hàng hiển thị"
-              rowsPerPageOptions={[6, 12, 100]}
+              rowsPerPageOptions={[6]}
               component="div"
               count={customers.length}
               rowsPerPage={rowsPerPage}
