@@ -295,7 +295,7 @@ const Staffs = () => {
                             }
 
                             return (
-                              <TableCell key={column.id} style={{fontSize: '17px',}}>
+                              <TableCell key={column.id} style={{fontSize: '16px',}}>
                                 {column.format && typeof value === "number"
                                   ? column.format(value)
                                   : value}
