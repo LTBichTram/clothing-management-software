@@ -14,7 +14,6 @@ import "react-toastify/dist/ReactToastify.css";
 const AddStaff = ({ setShowFormAddStaff }) => {
   const inputAvatarRef = useRef(null);
   const birthdayRef = useRef(null);
-  const [showLogAdd, setShowLogAdd] = useState(false);
   const [staff, setStaff] = useState({
     username: "",
     password: "",
