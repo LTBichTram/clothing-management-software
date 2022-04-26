@@ -87,15 +87,14 @@ const Customers = () => {
 
 
    useEffect(()=>{
-    console.log({pointFrom, pointTo})
-     if(!pointTo) {
-      const dataPoints = defaultCustomer.filter(customer => customer.point >= pointFrom)
-      setCustomers(dataPoints)
+     if(!pointFrom && !pointTo) {
+      setCustomers(defaultCustomer);
      } else if(!pointFrom) {
       const dataPoints = defaultCustomer.filter(customer => customer.point <= pointTo)
       setCustomers(dataPoints)
-     } else if(!pointFrom && !pointTo) {
-       setCustomers(defaultCustomer);
+     } else if(!pointTo) {
+       const dataPoints = defaultCustomer.filter(customer => customer.point >= pointFrom)
+      setCustomers(dataPoints)
      }
      else{
        axios
@@ -114,15 +113,14 @@ const Customers = () => {
 
 
    useEffect(()=>{
-     console.log({totalPriceFrom, totalPriceTo})
-    if(!totalPriceFrom) {
+    if(!totalPriceTo && !totalPriceFrom) {
+      setCustomers(defaultCustomer);
+    } else if(!totalPriceTo) {
      const dataPoints = defaultCustomer.filter(customer => customer.totalPrice >= totalPriceFrom);
      setCustomers(dataPoints)
-    } else if(!totalPriceTo) {
-     const dataPoints = defaultCustomer.filter(customer => customer.totalPrice <= totalPriceTo);
+    } else if(!totalPriceFrom) {
+      const dataPoints = defaultCustomer.filter(customer => customer.totalPrice <= totalPriceTo);
      setCustomers(dataPoints)
-    } else if(!totalPriceTo && !totalPriceFrom) {
-      setCustomers(defaultCustomer);
     }
     else{
       axios
@@ -273,7 +271,7 @@ const Customers = () => {
                               if (!row.point) value = 0;
                             }
                             return (
-                              <TableCell key={column.id}>
+                              <TableCell key={column.id} style={{fontSize: '16px',}}>
                                 {column.format && typeof value === "number"
                                   ? column.format(value)
                                   : value}

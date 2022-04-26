@@ -88,6 +88,10 @@
   text-align: center;
 }
 
+.list_right {
+  animation: fade-in-top 1.5s;
+}
+
 .customer-card {
   border: 1px solid #a19b9b;
   border-radius: 10px;
@@ -99,7 +103,7 @@
   animation: fade-in-left 1.5s;
 }
 
-.customer-card:last-child {
+.customer-card:nth-child(2) {
   margin-bottom: 20px;
   animation: fade-in-right 1.5s;
 }
@@ -143,7 +147,6 @@
   border-radius: 8px;
   background-color: #fff;
   margin-bottom: 25px;
-  animation: fade-in-ani 1s;
 }
 
 .customer-card:hover {
@@ -157,6 +160,10 @@
 
 i.bx.bx-export {
   margin-right: 6px;
+}
+
+.print_file-btn {
+  animation: fade-in-left 1.5s;
 }
   
   
