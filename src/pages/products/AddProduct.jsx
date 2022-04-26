@@ -5,6 +5,7 @@ import axios from "axios";
 
 import validateProduct from "./form_validate/validateProduct";
 import useFormProduct from "./form_validate/useFormProduct";
+import { toast } from "react-toastify";
 
 const AddProduct = ({ setRerenderProducts, setShowFormAddProduct }) => {
   const inputAvatarRef = useRef(null);
@@ -27,7 +28,6 @@ const AddProduct = ({ setRerenderProducts, setShowFormAddProduct }) => {
   //get All categories
   useEffect(() => {
     axios.get("http://localhost:8080/api/categories").then((res) => {
-      console.log(res.data);
       setCategories(res.data);
       setCategoryId(res.data[0].id);
     });
@@ -96,12 +96,12 @@ const AddProduct = ({ setRerenderProducts, setShowFormAddProduct }) => {
         setQrImage(res.data.qrCodeUrl);
         setProductId(res.data.id);
         setRerenderProducts(true);
-        alert("Thêm sản phẩm thành công");
+        toast("Thêm mới sản phẩm thành công");
       })
       .catch((error) => {
         console.log(error);
         if (error.response) {
-          alert("Thêm sản phẩm thất bại");
+          toast("Thêm mới sản phẩm thất bại");
           // Request made and server responded
           console.log(error.response.data);
         }

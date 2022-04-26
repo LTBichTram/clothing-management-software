@@ -8,8 +8,8 @@ import DatePicker from "@mui/lab/DatePicker";
 import useFormStaff from "../form_validate/useFormStaff";
 import validateStaff from "../form_validate/validateStaff";
 import axios from "axios";
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const AddStaff = ({ setShowFormAddStaff }) => {
   const inputAvatarRef = useRef(null);
@@ -58,10 +58,10 @@ const AddStaff = ({ setShowFormAddStaff }) => {
       )
       .then((res) => {
         setShowFormAddStaff(false);
-        setShowLogAdd(true);
+        toast("Thêm mới nhân viên thành công");
       })
       .catch((err) => {
-        alert("Thêm nhân viên thất bại");
+        toast("Thêm mới nhân viên thất bại");
       });
   };
   const { handleChange, handleChangeBirthday, handleSubmit, errors } =
@@ -78,26 +78,9 @@ const AddStaff = ({ setShowFormAddStaff }) => {
 
   return (
     <div className="add_staff-container">
-      {showLogAdd && (
-        <div>
-          <ToastContainer
-            position="top-right"
-            autoClose={5000}
-            hideProgressBar={false}
-            newestOnTop={false}
-            closeOnClick
-            rtl={false}
-            pauseOnFocusLoss
-            draggable
-            pauseOnHover
-          />
-          <ToastContainer />
-        </div>
-      )}
       <div className="add_staff-heading">
         <h3 className="add_staff-heading-title">Thêm mới nhân viên</h3>
-        <div onClick={onExitClick} className="bx bx-x add_staff-btn-exit">
-        </div>
+        <div onClick={onExitClick} className="bx bx-x add_staff-btn-exit"></div>
       </div>
       <div className="add_staff-body">
         <div className="add_staff_img">
