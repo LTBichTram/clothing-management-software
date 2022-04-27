@@ -254,7 +254,7 @@ const Products = () => {
             setRerenderProducts={setRerenderProducts}
           />
         </div>
-        <div className="div_right">
+        <div className="list_right">
           <div style={{ padding: "10px 0px 10px 10px" }}>
             <Paper sx={{ width: "100%", overflow: "hidden" }}>
               <TableContainer sx={{ maxHeight: 440 }}>
