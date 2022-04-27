@@ -110,20 +110,20 @@ const UpdateProduct = ({ product, setProduct, setShowFormUpdateProduct }) => {
   };
 
   return (
-    <div className="update_product-container">
-      <div className="update_product-heading">
-        <h3 className="update_product-heading-title">Cập nhật sản phẩm</h3>
-        <div className="update_product-heading-info">
+    <div className="form-container">
+      <div className="form-heading">
+        <h3 className="form-heading-title">Cập nhật sản phẩm</h3>
+        <div className="form-heading-info">
           <p>Thông tin</p>
           <div className="line-add"></div>
         </div>
-        <div onClick={onExitClick} className="update_product-btn-exit">
+        <div onClick={onExitClick} className="form-btn-exit">
           X
         </div>
       </div>
-      <div className="update_product-body">
-        <div className="update_product-form">
-          <div className="update_product-form-row">
+      <div className="form-body">
+        <div className="form">
+          <div className="form-row">
             <span>Mã sản phẩm</span>
             <input
               type="text"
@@ -132,7 +132,7 @@ const UpdateProduct = ({ product, setProduct, setShowFormUpdateProduct }) => {
               readOnly
             />
           </div>
-          <div className="update_product-form-row">
+          <div className="form-row">
             <span>Giá vốn (đồng)</span>
             <input
               type="text"
@@ -141,9 +141,9 @@ const UpdateProduct = ({ product, setProduct, setShowFormUpdateProduct }) => {
               value={product.costPrice}
               onChange={handleChange}
             />
-            <p className="update_product-form-error">{errors.costPrice}</p>
+            <p className="form-error">{errors.costPrice}</p>
           </div>
-          <div className="update_product-form-row">
+          <div className="form-row">
             <span>Loại sản phẩm</span>
 
             <select
@@ -152,7 +152,7 @@ const UpdateProduct = ({ product, setProduct, setShowFormUpdateProduct }) => {
               onChange={(e) => {
                 setCategoryId(e.target.value);
               }}
-              className="update_product-form-select"
+              className="form-select"
             >
               {categories.map((category) => {
                 return (
@@ -163,7 +163,7 @@ const UpdateProduct = ({ product, setProduct, setShowFormUpdateProduct }) => {
               })}
             </select>
           </div>
-          <div className="update_product-form-row">
+          <div className="form-row">
             <span>Giảm giá (%)</span>
             <input
               name="discount"
@@ -183,15 +183,15 @@ const UpdateProduct = ({ product, setProduct, setShowFormUpdateProduct }) => {
                 class="bx bxs-down-arrow discount_type_item"
               ></i>
             </div>
-            <p className="update_product-form-error">{errors.countInStock}</p>
+            <p className="form-error">{errors.countInStock}</p>
           </div>
 
-          <div className="update_product-form-row">
+          <div className="form-row">
             <span>Tên sản phẩm</span>
             <input name="name" value={product.name} onChange={handleChange} />
-            <p className="update_product-form-error">{errors.name}</p>
+            <p className="form-error">{errors.name}</p>
           </div>
-          <div className="update_product-form-row">
+          <div className="form-row">
             <span>Giá bán (đồng)</span>
             <input
               type="text"
@@ -201,10 +201,10 @@ const UpdateProduct = ({ product, setProduct, setShowFormUpdateProduct }) => {
               value={product.salePrice}
               onChange={handleChange}
             />
-            <p className="update_product-form-error">{errors.salePrice}</p>
+            <p className="form-error">{errors.salePrice}</p>
           </div>
 
-          <div className="update_product-form-row">
+          <div className="form-row">
             <span>Giá nhập</span>
             <input
               pattern="[0-9]*"
@@ -213,12 +213,12 @@ const UpdateProduct = ({ product, setProduct, setShowFormUpdateProduct }) => {
               value={product.originPrice}
               onChange={handleChange}
             />
-            <p className="update_product-form-error">{errors.originPrice}</p>
+            <p className="form-error">{errors.originPrice}</p>
           </div>
         </div>
       </div>
-      <div className="update_product-form-images">
-        <div className="update_product-form-image">
+      <div className="form-images">
+        <div className="form-image">
           <input
             ref={inputAvatarRef}
             type="file"
@@ -235,16 +235,16 @@ const UpdateProduct = ({ product, setProduct, setShowFormUpdateProduct }) => {
             alt=""
           />
         </div>
-        <div className="update_product-form-image">
+        <div className="form-image">
           <p>Mã vạch</p>
           <img style={{ height: 120, width: 120 }} src={qrImage} alt="" />
         </div>
       </div>
-      <div className="update_product-btn-row">
-        <button onClick={handleSubmit} className="update_product-btn-save">
+      <div className="form-btn-row">
+        <button onClick={handleSubmit} className="form-btn-save">
           Lưu
         </button>
-        <button onClick={onExitClick} className="update_product-btn-cancel">
+        <button onClick={onExitClick} className="form-btn-cancel">
           Bỏ qua
         </button>
       </div>

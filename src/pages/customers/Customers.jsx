@@ -113,48 +113,19 @@ const Customers = () => {
      }
    },[pointFrom, pointTo]); 
 
-
-   useEffect(()=>{
-    if(!totalPriceTo && !totalPriceFrom) {
-      setCustomers(defaultCustomer);
-    } else if(!totalPriceTo) {
-     const dataPoints = defaultCustomer.filter(customer => customer.totalPrice >= totalPriceFrom);
-     setCustomers(dataPoints)
-    } else if(!totalPriceFrom) {
-      const dataPoints = defaultCustomer.filter(customer => customer.totalPrice <= totalPriceTo);
-     setCustomers(dataPoints)
-    }
-    else{
-      axios
-        .get(
-          `http://localhost:8080/api/customers/filterPoint?minPoint=${pointFrom}&maxPoint=${pointTo}`
-        )
-        .then((response) => {
-          if (response.data.length === 0) {
-            setCustomers(defaultCustomer);
-          } else {
-            setCustomers(response.data);
-          }
-        })
-        .catch((error) => {});
-    }
-  }, [pointFrom, pointTo]);
-
   useEffect(() => {
-    console.log({ totalPriceFrom, totalPriceTo });
-    if (!totalPriceFrom) {
-      const dataPoints = defaultCustomer.filter(
-        (customer) => customer.totalPrice >= totalPriceFrom
-      );
-      setCustomers(dataPoints);
+    if (!totalPriceTo && !totalPriceFrom) {
+      setCustomers(defaultCustomer);
     } else if (!totalPriceTo) {
       const dataPoints = defaultCustomer.filter(
         (customer) => customer.totalPrice >= totalPriceFrom
       );
-      console.log(dataPoints);
       setCustomers(dataPoints);
-    } else if (!totalPriceTo && !totalPriceFrom) {
-      setCustomers(defaultCustomer);
+    } else if (!totalPriceFrom) {
+      const dataPoints = defaultCustomer.filter(
+        (customer) => customer.totalPrice <= totalPriceTo
+      );
+      setCustomers(dataPoints);
     } else {
       axios
         .get(
@@ -253,7 +224,7 @@ const Customers = () => {
           </div>
           <div className="print_file-btn">
             <button className="btn" onClick={() => handlePrint()}>
-              <i class="bx bx-export"></i>
+              <i class="bx bx-export action-btn-icon"></i>
               Xuất file
             </button>
           </div>

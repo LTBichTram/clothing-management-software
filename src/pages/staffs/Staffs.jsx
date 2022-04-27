@@ -13,8 +13,8 @@ import axios from "axios";
 import "./Staffs.css";
 
 import ModalUnstyled from "@mui/core/ModalUnstyled";
-import AddStaff from "./addstaff/AddStaff";
-import UpdateStaff from "./updatestaff/UpdateStaff";
+import AddStaff from "./AddStaff";
+import UpdateStaff from "./UpdateStaff";
 import Dialog from "../../components/dialog/Dialog";
 import { styled} from "@mui/system";
 
