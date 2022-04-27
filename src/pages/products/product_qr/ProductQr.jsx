@@ -1,15 +1,15 @@
 import React, { useEffect, useState, useRef } from "react";
 import axios from "axios";
 import "./productQr.css";
-import { useLocation, useNavigate } from "react-router";
+import { useHistory } from "react-router-dom";
 import { useReactToPrint } from "react-to-print";
 const ProductQr = () => {
   const componentRef = useRef();
   const handlePrint = useReactToPrint({
     content: () => componentRef.current,
   });
-  let location = useLocation();
-  const history = useNavigate();
+
+  const history = useHistory();
 
   const [products, setProducts] = useState([]);
 
