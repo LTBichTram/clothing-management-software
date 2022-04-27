@@ -1,5 +1,4 @@
 import React, { useState, useEffect, useRef } from "react";
-import { useReactToPrint } from "react-to-print";
 import Paper from "@mui/material/Paper";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
@@ -211,15 +210,14 @@ const Staffs = () => {
               className="card_select"
               value={searchPosition}
             >
-              <div style={{marginBottom: '10px'}}></div>
               <option value="All">Tất cả</option>
               <option value="Nhân viên kho">Nhân viên kho</option>
               <option value="Nhân viên thu ngân">Nhân viên thu ngân</option>
             </select>
           </div>
-          <div className="action-staff-btn">
+          <div className="action-btn">
             <button className="btn" onClick={() => setShowFormAddStaff(true)}>
-              <i class="bx bx-plus"></i>
+              <i className="bx bx-plus action-btn-icon"></i>
               Thêm nhân viên{" "}
             </button>
           </div>
@@ -296,7 +294,7 @@ const Staffs = () => {
                           >
                             <i
                               style={{ fontSize: 18, color: "#005059", cursor: "pointer" }}
-                              class="bx bxs-edit hide-on-print"
+                              className="bx bxs-edit hide-on-print"
                             ></i>
                           </TableCell>
                           <TableCell
@@ -309,7 +307,7 @@ const Staffs = () => {
                           >
                             <i
                               style={{fontSize: 18, color: "#fd501b", cursor: "pointer"}}
-                              class="bx bx-trash hide-on-print"
+                              className="bx bx-trash hide-on-print"
                             ></i>
                           </TableCell>
                         </TableRow>
