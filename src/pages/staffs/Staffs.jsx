@@ -1,5 +1,4 @@
 import React, { useState, useEffect, useRef } from "react";
-import { useReactToPrint } from "react-to-print";
 import Paper from "@mui/material/Paper";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
@@ -8,7 +7,7 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TablePagination from "@mui/material/TablePagination";
 import TableRow from "@mui/material/TableRow";
-import { ToastContainer, toast } from 'react-toastify';
+import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import axios from "axios";
 import "./Staffs.css";
@@ -51,11 +50,7 @@ const Staffs = () => {
   const [showFormAddStaff, setShowFormAddStaff] = useState(false);
   const [showFormUpdateStaff, setShowFormUpdateStaff] = useState(false);
   const [showDialogDelete, setShowDialogDelete] = useState(false);
-  const [showLogDelete, setShowLogDelete] = useState(false);
   const componentRef = useRef();
-  const handlePrint = useReactToPrint({
-    content: () => componentRef.current,
-  });
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(6);
 
@@ -102,11 +97,12 @@ const Staffs = () => {
       .post(`http://localhost:8080/api/users/delete/${selectedStaff.id}`)
       .then((res) => {
         handleCloseDialog();
-        setShowLogDelete(true)
+        toast("Xóa nhân viên thành công");
         setSelectedStaff(null);
       })
       .catch(() => {
         handleCloseDialog();
+        toast("Xóa nhân viên thất bại");
       });
   };
   
@@ -155,20 +151,7 @@ const Staffs = () => {
   }, [showFormAddStaff, showFormUpdateStaff, selectedStaff]);
 
   return (
-    <div className="staffs">
-      {showLogDelete &&
-        (<div><ToastContainer
-          position="top-right"
-          autoClose={5000}
-          hideProgressBar={false}
-          newestOnTop={false}
-          closeOnClick
-          rtl={false}
-          pauseOnFocusLoss
-          draggable
-          pauseOnHover
-          /><ToastContainer/></div>)
-      }
+    <div className="main staffs">
       <Dialog
         title="Xoá nhân viên"
         content={`Bạn có muốn xoá nhân viên: ${selectedStaff?.fullname} `}
@@ -218,24 +201,23 @@ const Staffs = () => {
           ></label>
         </div>
       </div>
-      <div className="list_staff">
+      <div className="main_list">
         <div className="list_left">
-          <div className="search_position">
-            <label className="search_position-label">Chức vụ:</label>
+          <div className="card">
+            <label className="card_select-label">Chức vụ:</label>
             <select
               onChange={searchPositionHandler}
-              className="search_position-select"
+              className="card_select"
               value={searchPosition}
             >
-              <div style={{marginBottom: '10px'}}></div>
               <option value="All">Tất cả</option>
               <option value="Nhân viên kho">Nhân viên kho</option>
               <option value="Nhân viên thu ngân">Nhân viên thu ngân</option>
             </select>
           </div>
-          <div className="action-staff-btn">
+          <div className="action-btn">
             <button className="btn" onClick={() => setShowFormAddStaff(true)}>
-              <i class="bx bx-plus"></i>
+              <i className="bx bx-plus action-btn-icon"></i>
               Thêm nhân viên{" "}
             </button>
           </div>
@@ -312,7 +294,7 @@ const Staffs = () => {
                           >
                             <i
                               style={{ fontSize: 18, color: "#005059", cursor: "pointer" }}
-                              class="bx bxs-edit hide-on-print"
+                              className="bx bxs-edit hide-on-print"
                             ></i>
                           </TableCell>
                           <TableCell
@@ -325,7 +307,7 @@ const Staffs = () => {
                           >
                             <i
                               style={{fontSize: 18, color: "#fd501b", cursor: "pointer"}}
-                              class="bx bx-trash hide-on-print"
+                              className="bx bx-trash hide-on-print"
                             ></i>
                           </TableCell>
                         </TableRow>
