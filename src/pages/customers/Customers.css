@@ -1,16 +1,8 @@
-.customers {
-  background-color: #fafafb;
-  height: 100vh;
-}
-
 .card_value-item > span,
 .timer-choice {
   width: 25%;
 }
 
-i.bx.bx-export {
-  margin-right: 6px;
-}
 
   
   

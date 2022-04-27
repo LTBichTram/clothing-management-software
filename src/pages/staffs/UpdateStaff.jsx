@@ -1,51 +1,40 @@
 import React, { useState, useRef } from "react";
-import "./AddStaff.css";
+import { ToastContainer, toast } from "react-toastify";
 
+import "react-toastify/dist/ReactToastify.css";
 import TextField from "@mui/material/TextField";
 import AdapterDateFns from "@mui/lab/AdapterDateFns";
 import LocalizationProvider from "@mui/lab/LocalizationProvider";
 import DatePicker from "@mui/lab/DatePicker";
-import useFormStaff from "../form_validate/useFormStaff";
-import validateStaff from "../form_validate/validateStaff";
+import useFormStaff from "./form_validate/useFormStaff";
+import validateUpdateStaff from "./form_validate/validateUpdateStaff";
 import axios from "axios";
-import { toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
 
-const AddStaff = ({ setShowFormAddStaff }) => {
+const UpdateStaff = ({ staff, setStaff, setShowFormUpdateStaff }) => {
   const inputAvatarRef = useRef(null);
-  const birthdayRef = useRef(null);
-  const [staff, setStaff] = useState({
-    username: "",
-    password: "",
-    confirmPassword: "",
-    phone: "",
-    address: "",
-    birthday: new Date(),
-    sex: "",
-    email: "",
-    fullname: "",
-    gender: "Nam",
-    position: "Nhân viên thu ngân",
-  });
 
   //Call API
   const submitForm = () => {
     var formStaff = new FormData();
+    console.log(staff.position);
     formStaff.append("username", staff.username);
-    formStaff.append("password", staff.password);
+
     formStaff.append("fullname", staff.fullname);
     formStaff.append("address", staff.address);
-    formStaff.append("birthday", staff.birthday);
+    formStaff.append("birthday", new Date(staff.birthday));
     formStaff.append("gender", staff.gender);
     formStaff.append("position", staff.position);
     formStaff.append("email", staff.email);
     formStaff.append("phone", staff.phone);
-    formStaff.append("image", avatar);
+    console.log(avatar);
+    if (avatar) {
+      formStaff.append("image", avatar);
+    }
 
     //post to API
     axios
-      .post(
-        "http://localhost:8080/api/users/create",
+      .put(
+        `http://localhost:8080/api/users/update/${staff.id}`,
         formStaff,
         {
           headers: {
@@ -56,15 +45,17 @@ const AddStaff = ({ setShowFormAddStaff }) => {
         { timeout: 1000 }
       )
       .then((res) => {
-        setShowFormAddStaff(false);
-        toast("Thêm mới nhân viên thành công");
+        toast("Cập nhật nhân viên thành công");
+        setShowFormUpdateStaff(false);
       })
       .catch((err) => {
-        toast("Thêm mới nhân viên thất bại");
+        console.log(err.response);
+        alert("Cập nhật nhân viên thất bại");
+        //setShowFormUpdateStaff(false);
       });
   };
   const { handleChange, handleChangeBirthday, handleSubmit, errors } =
-    useFormStaff(submitForm, staff, setStaff, validateStaff);
+    useFormStaff(submitForm, staff, setStaff, validateUpdateStaff);
   const [avatar, setAvatar] = useState();
   const onImageChange = (event) => {
     if (event.target.files && event.target.files[0]) {
@@ -72,25 +63,20 @@ const AddStaff = ({ setShowFormAddStaff }) => {
     }
   };
   const onExitClick = () => {
-    setShowFormAddStaff(false);
+    setShowFormUpdateStaff(false);
   };
-
   return (
-    <div className="add_staff-container">
-      <div className="add_staff-heading">
-        <h3 className="add_staff-heading-title">Thêm mới nhân viên</h3>
-        <div onClick={onExitClick} className="bx bx-x add_staff-btn-exit"></div>
+    <div className="form-container">
+      <div className="form-heading">
+        <h3 className="form-heading-title">Cập nhật thông tin nhân viên</h3>
+        <div onClick={onExitClick} className="bx bx-x form-btn-exit"></div>
       </div>
-      <div className="add_staff-body">
-        <div className="add_staff_img">
+      <div className="form-body">
+        <div className="form_img">
           <img
-            src={
-              avatar
-                ? URL.createObjectURL(avatar)
-                : "https://res.cloudinary.com/hoquanglinh/image/upload/v1635330645/profile_ieghzz.jpg"
-            }
+            src={avatar ? URL.createObjectURL(avatar) : staff.imgUrl}
             alt=""
-            className="add_staff-avatar"
+            className="form-avatar"
           />
           <input
             ref={inputAvatarRef}
@@ -107,26 +93,23 @@ const AddStaff = ({ setShowFormAddStaff }) => {
             Chọn ảnh
           </button>
         </div>
-        <div className="add_staff-form">
-          <div className="add_staff-form-row">
-            <span>Tên tài khoản</span>
+        <div className="form">
+          <div className="form-row">
+            <span>Mã nhân viên</span>
             <input
-              className={errors.username ? "error" : ""}
-              onChange={handleChange}
               name="username"
-              value={staff.username}
+              value={staff.id.substr(staff.id.length - 7)}
               type="text"
             />
-            <p className="add_staff-form-error">{errors.username}</p>
+            <p className="form-error">{errors.username}</p>
           </div>
-          <div className="add_staff-form-row">
+          <div className="form-row">
             <span>Ngày sinh</span>
-            <p className="add_staff-form-error">{errors.birthday}</p>
+            <p className="form-error">{errors.birthday}</p>
 
             <LocalizationProvider dateAdapter={AdapterDateFns}>
               <DatePicker
                 inputFormat="dd/MM/yyyy"
-                ref={birthdayRef}
                 views={["day", "month", "year"]}
                 value={staff.birthday}
                 name="birthday"
@@ -149,57 +132,7 @@ const AddStaff = ({ setShowFormAddStaff }) => {
               />
             </LocalizationProvider>
           </div>
-          <div className="add_staff-form-row">
-            <span>Mật khẩu</span>
-            <input
-              className={errors.password ? "error" : ""}
-              onChange={handleChange}
-              type="password"
-              value={staff.password}
-              name="password"
-            />
-            <p className="add_staff-form-error">{errors.password}</p>
-          </div>
-
-          <div className="add_staff-form-row">
-            <span>Giới tính</span>
-
-            <select
-              value={staff.gender}
-              className="add_staff-form-select"
-              name="gender"
-              onChange={handleChange}
-            >
-              <option value="Nam">Nam</option>
-              <option value="Nữ">Nữ</option>
-              <option value="Khác">Khác</option>
-            </select>
-          </div>
-          <div className="add_staff-form-row">
-            <span>Xác nhận mật khẩu</span>
-            <input
-              type="password"
-              name="confirmPassword"
-              value={staff.confirmPassword}
-              onChange={handleChange}
-              className={errors.confirmPassword ? "error" : ""}
-            />
-            <p className="add_staff-form-error">{errors.confirmPassword}</p>
-          </div>
-          <div className="add_staff-form-row">
-            <span>Chức vụ</span>
-            <select
-              value={staff.position}
-              onChange={handleChange}
-              className="add_staff-form-select"
-              name="position"
-              id="active"
-            >
-              <option value="Nhân viên thu ngân">Nhân viên thu ngân</option>
-              <option value="Nhân viên kho">Nhân viên kho</option>
-            </select>
-          </div>
-          <div className="add_staff-form-row">
+          <div className="form-row">
             <span>Họ tên</span>
             <input
               name="fullname"
@@ -208,20 +141,49 @@ const AddStaff = ({ setShowFormAddStaff }) => {
               className={errors.fullname ? "error" : ""}
               type="text"
             />
-            <p className="add_staff-form-error">{errors.fullname}</p>
+            <p className="form-error">{errors.fullname}</p>
           </div>
-          <div className="add_staff-form-row">
+          <div className="form-row">
+            <span>Giới tính</span>
+
+            <select
+              value={staff.gender}
+              className="form-select"
+              name="gender"
+              onChange={handleChange}
+            >
+              <option value="Nam">Nam</option>
+              <option value="Nữ">Nữ</option>
+              <option value="Khác">Khác</option>
+            </select>
+          </div>
+
+          <div className="form-row">
+            <span>Chức vụ</span>
+            <select
+              onChange={handleChange}
+              value={staff.position}
+              className="form-select"
+              name="position"
+              id="active"
+            >
+              <option value="Nhân viên kho">Nhân viên kho</option>
+              <option value="Nhân viên thu ngân">Nhân viên thu ngân</option>
+            </select>
+          </div>
+
+          <div className="form-row">
             <span>Email</span>
             <input
               name="email"
               onChange={handleChange}
-              value={staff.value}
+              value={staff.email}
               type="text"
               className={errors.email ? "error" : ""}
             />
-            <p className="add_staff-form-error">{errors.email}</p>
+            <p className="form-error">{errors.email}</p>
           </div>
-          <div className="add_staff-form-row">
+          <div className="form-row">
             <span>Địa chỉ</span>
             <input
               name="address"
@@ -230,9 +192,9 @@ const AddStaff = ({ setShowFormAddStaff }) => {
               className={errors.address ? "error" : ""}
               type="text"
             />
-            <p className="add_staff-form-error">{errors.address}</p>
+            <p className="form-error">{errors.address}</p>
           </div>
-          <div className="add_staff-form-row">
+          <div className="form-row">
             <span>Số điện thoại</span>
             <input
               name="phone"
@@ -241,15 +203,15 @@ const AddStaff = ({ setShowFormAddStaff }) => {
               className={errors.phone ? "error" : ""}
               type="text"
             />
-            <p className="add_staff-form-error">{errors.phone}</p>
+            <p className="form-error">{errors.phone}</p>
           </div>
         </div>
       </div>
-      <div className="add_staff-btn-row">
-        <button onClick={handleSubmit} className="add_staff-btn-save">
-          Lưu
+      <div className="form-btn-row">
+        <button onClick={handleSubmit} className="form-btn-save">
+          Cập nhật
         </button>
-        <button onClick={onExitClick} className="add_staff-btn-cancel">
+        <button onClick={onExitClick} className="form-btn-cancel">
           Bỏ qua
         </button>
       </div>
@@ -257,4 +219,4 @@ const AddStaff = ({ setShowFormAddStaff }) => {
   );
 };
 
-export default AddStaff;
+export default UpdateStaff;
