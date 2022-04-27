@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useRef } from "react";
-import ProductsNavbar from "./products_navbar/ProductsNavbar";
+import ProductsNavbar from "./products_action/ProductsAction";
 import Paper from "@mui/material/Paper";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
@@ -225,14 +225,13 @@ const Products = () => {
       <div className="main_list">
         <div className="list_left">
           <div className="card">
-            <label className="card-select-label">Thời trang:</label>
+            <label className="card_select-label">Thời trang:</label>
             <select
-              name="category"
               onChange={handleFilterProductsByCategory}
               onClick={handleFilterProductsByCategory}
-              className="selectbox"
+              className="card_select"
             >
-              <option value="all">Tất cả</option>
+              <option value="All">Tất cả</option>
               {categories.map((category, index) => {
                 return (
                   <option key={index} value={category.id}>
@@ -242,124 +241,128 @@ const Products = () => {
               })}
             </select>
           </div>
-          <div className="product-btn-view-qr">
+          <div className="action-btn">
             <Link to="/productQr">
-              <button className="product-btn-view-qr-btn">Xem mã vạch</button>
+              <button className="btn">
+                <i className='bx bx-qr action-btn-icon'></i>
+                Xem mã vạch
+              </button>
             </Link>
           </div>
+          <ProductsNavbar
+            handlePrint={handlePrint}
+            setRerenderProducts={setRerenderProducts}
+          />
         </div>
-      <div className="div_right">
-        <div style={{ padding: "10px 0px 10px 10px" }}>
-          <Paper sx={{ width: "100%", overflow: "hidden" }}>
-            <TableContainer sx={{ maxHeight: 440 }}>
-              <Table ref={componentRef} stickyHeader aria-label="sticky table">
-                <TableHead>
-                  <TableRow>
-                    {columns.map((column) => (
-                      <TableCell
-                        key={column.id}
-                        align={column.align}
-                        style={{
-                          minWidth: column.minWidth,
-                          backgroundColor: "#03a9f4",
-                          color: "#fff",
-                          fontWeight: "bold",
-                        }}
-                      >
-                        {column.label}
-                      </TableCell>
-                    ))}
-                    <TableCell
-                      style={{
-                        backgroundColor: "#03a9f4",
-                      }}
-                    ></TableCell>
-                    <TableCell
-                      style={{
-                        backgroundColor: "#03a9f4",
-                      }}
-                    ></TableCell>
-                  </TableRow>
-                </TableHead>
-                <TableBody>
-                  {products
-                    .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                    .map((row, index) => {
-                      return (
-                        <TableRow
-                          hover
-                          role="checkbox"
-                          key={row.code}
-                          style={
-                            index % 2 == 1 ? { backgroundColor: "#e8e8e8" } : {}
-                          }
+        <div className="div_right">
+          <div style={{ padding: "10px 0px 10px 10px" }}>
+            <Paper sx={{ width: "100%", overflow: "hidden" }}>
+              <TableContainer sx={{ maxHeight: 440 }}>
+                <Table ref={componentRef} stickyHeader aria-label="sticky table"
+                  style={{boxShadow: "0 2px 15px rgb(0 0 0 / 25%) !important"}}
+                >
+                  <TableHead>
+                    <TableRow>
+                      {columns.map((column) => (
+                        <TableCell
+                          key={column.id}
+                          align={column.align}
+                          style={{
+                            minWidth: column.minWidth,
+                            backgroundImage: "-webkit-linear-gradient(90deg, #fd501b, #ff861a)",
+                            color: "#fff",
+                            fontSize: '17px',
+                            fontWeight: "bold",
+                          }}
                         >
-                          {columns.map((column) => {
-                            let value = row[column.id];
-                            if (column.id === "id") {
-                              value = value?.substr(value.length - 7);
+                          {column.label}
+                        </TableCell>
+                      ))}
+                      <TableCell
+                        style={{
+                          backgroundImage: "-webkit-linear-gradient(90deg, #fd501b, #ff861a)",
+                        }}
+                      ></TableCell>
+                      <TableCell
+                        style={{
+                          backgroundImage: "-webkit-linear-gradient(90deg, #fd501b, #ff861a)",
+                        }}
+                      ></TableCell>
+                    </TableRow>
+                  </TableHead>
+                  <TableBody>
+                    {products
+                      .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                      .map((row, index) => {
+                        return (
+                          <TableRow
+                            hover
+                            role="checkbox"
+                            key={row.code}
+                            style={
+                              index % 2 == 1 ? { backgroundColor: "#ff861a24" } : {}
                             }
-
-                            return (
-                              <TableCell key={column.id}>
-                                {column.format && typeof value === "number"
-                                  ? column.format(value)
-                                  : value}
-                              </TableCell>
-                            );
-                          })}
-                          <TableCell
-                            onClick={() => {
-                              console.log("update");
-                              setSelectedProduct(row);
-
-                              setShowFormUpdateProduct(true);
-                            }}
                           >
-                            <i
-                              style={{ fontSize: 18, color: "#0DB3E2" }}
-                              class="bx bxs-edit hide-on-print"
-                            ></i>
-                          </TableCell>
-                          <TableCell
-                            onClick={() => {
-                              console.log("delete");
+                            {columns.map((column) => {
+                              let value = row[column.id];
+                              if (column.id === "id") {
+                                value = value?.substr(value.length - 7);
+                              }
 
-                              setSelectedProduct(row);
-                              setShowDialogDelete(true);
-                            }}
-                          >
-                            <i
-                              style={{ fontSize: 18, color: "#F26339" }}
-                              class="bx bx-trash hide-on-print"
-                            ></i>
-                          </TableCell>
-                        </TableRow>
-                      );
-                    })}
-                </TableBody>
-              </Table>
-            </TableContainer>
-            <TablePagination
-              rowsPerPageOptions={[6, 12, 100]}
-              component="div"
-              count={products.length}
-              rowsPerPage={rowsPerPage}
-              page={page}
-              onPageChange={handleChangePage}
-              onRowsPerPageChange={handleChangeRowsPerPage}
-              labelRowsPerPage="Số hàng hiển thị"
-            />
-          </Paper>
+                              return (
+                                <TableCell key={column.id} style={{fontSize: '16px',}}>
+                                  {column.format && typeof value === "number"
+                                    ? column.format(value)
+                                    : value}
+                                </TableCell>
+                              );
+                            })}
+                            <TableCell
+                              onClick={() => {
+                                console.log("update");
+                                setSelectedProduct(row);
+
+                                setShowFormUpdateProduct(true);
+                              }}
+                            >
+                              <i
+                                style={{ fontSize: 18, color: "#005059", cursor: "pointer" }}
+                                className="bx bxs-edit hide-on-print"
+                              ></i>
+                            </TableCell>
+                            <TableCell
+                              onClick={() => {
+                                console.log("delete");
+
+                                setSelectedProduct(row);
+                                setShowDialogDelete(true);
+                              }}
+                            >
+                              <i
+                                style={{fontSize: 18, color: "#fd501b", cursor: "pointer"}}
+                                className="bx bx-trash hide-on-print"
+                              ></i>
+                            </TableCell>
+                          </TableRow>
+                        );
+                      })}
+                  </TableBody>
+                </Table>
+              </TableContainer>
+              <TablePagination
+                rowsPerPageOptions={[6]}
+                component="div"
+                count={products.length}
+                rowsPerPage={rowsPerPage}
+                page={page}
+                onPageChange={handleChangePage}
+                onRowsPerPageChange={handleChangeRowsPerPage}
+                labelRowsPerPage="Số hàng hiển thị"
+              />
+            </Paper>
+          </div>
         </div>
-        
-
-        <ProductsNavbar
-          handlePrint={handlePrint}
-          setRerenderProducts={setRerenderProducts}
-        />
       </div>
-    </div>
     </div>
   );
 };

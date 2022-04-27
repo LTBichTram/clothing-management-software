@@ -12,19 +12,6 @@ i.bx.bx-export {
   margin-right: 6px;
 }
 
-.print_file-btn {
-  animation: fade-in-left 1.5s;
-}
-
-.print_file-btn > button {
-  cursor: pointer;
-  font-weight: bold;
-  padding: 10px 20px;
-  color: #fff;
-  border-radius: 5px;
-  background-image: linear-gradient(150deg, #005059, #3491a8);
-  font-size: 18px;
-}
   
   
   

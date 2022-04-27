@@ -225,7 +225,8 @@ table {
 .search_name-input {
   flex: 1;
   font-size: 16px;
-  padding: 8px 6px;
+  padding: 8px;
+  border-radius: 5px;
 }
 
 .search_name-icon {
@@ -243,6 +244,7 @@ table {
 /* card select */
 .card {
   display: block;
+  width: 224px;
   font-size: 17px;
   padding: 20px 15px;
   box-shadow: 0 2px 15px rgb(0 0 0 / 25%);
@@ -253,7 +255,7 @@ table {
 }
 
 .card:hover {
-  box-shadow: 0 3px 15px rgb(0 102 110 / 35%);
+  box-shadow: 0 3px 15px rgba(173, 178, 179, 0.35);
 }
 
 .card_select-label {
@@ -264,11 +266,13 @@ table {
 
 .card_select {
   font-size: 17px;
-  margin-left: 10px;
   border-radius: 5px;
   padding: 5px;
   border: 2px solid #005059;
+  width: 90%;
+  display: inline-block;
   outline: 0;
+  cursor: pointer;
 }
 
 .card_select option {
@@ -351,6 +355,46 @@ select option {
 
 .list_right {
   animation: fade-in-top 1.5s;
+}
+
+
+/* button action */
+.action-btn {
+  margin: 10px;
+  margin-top: 45px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: fade-in-right 1.5s;
+}
+.action-btn button {
+  cursor: pointer;
+  font-weight: bold;
+  padding: 10px 20px;
+  color: #fff;
+  border-radius: 5px;
+  background-image: linear-gradient(150deg, #005059, #3491a8);
+  font-size: 18px;
+}
+
+.action-btn-icon {
+  margin-right: 6px;
+}
+
+
+/* button print file */
+.print_file-btn {
+  animation: fade-in-left 1.5s;
+}
+
+.print_file-btn > button {
+  cursor: pointer;
+  font-weight: bold;
+  padding: 10px 20px;
+  color: #fff;
+  border-radius: 5px;
+  background-image: linear-gradient(150deg, #005059, #3491a8);
+  font-size: 18px;
 }
 
 @media screen {
