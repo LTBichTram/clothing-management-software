@@ -210,9 +210,9 @@ const Products = () => {
             className="search_name-input"
             id="search_name-input"
             value={searchText}
-                onChange={(e) => {
-                  setSearchText(e.target.value);
-                }}
+            onChange={(e) => {
+              setSearchText(e.target.value);
+            }}
             placeholder="Nhập mã hoặc tên sản phẩm"
           />
           <label
@@ -228,10 +228,10 @@ const Products = () => {
             <label className="card_select-label">Thời trang:</label>
             <select
               onChange={handleFilterProductsByCategory}
-              onClick={handleFilterProductsByCategory}
+              // onClick={handleFilterProductsByCategory}
               className="card_select"
             >
-              <option value="All">Tất cả</option>
+              <option value="all">Tất cả</option>
               {categories.map((category, index) => {
                 return (
                   <option key={index} value={category.id}>
@@ -244,7 +244,7 @@ const Products = () => {
           <div className="action-btn">
             <Link to="/productQr">
               <button className="btn">
-                <i className='bx bx-qr action-btn-icon'></i>
+                <i className="bx bx-qr action-btn-icon"></i>
                 Xem mã vạch
               </button>
             </Link>
@@ -258,8 +258,13 @@ const Products = () => {
           <div style={{ padding: "10px 0px 10px 10px" }}>
             <Paper sx={{ width: "100%", overflow: "hidden" }}>
               <TableContainer sx={{ maxHeight: 440 }}>
-                <Table ref={componentRef} stickyHeader aria-label="sticky table"
-                  style={{boxShadow: "0 2px 15px rgb(0 0 0 / 25%) !important"}}
+                <Table
+                  ref={componentRef}
+                  stickyHeader
+                  aria-label="sticky table"
+                  style={{
+                    boxShadow: "0 2px 15px rgb(0 0 0 / 25%) !important",
+                  }}
                 >
                   <TableHead>
                     <TableRow>
@@ -269,9 +274,10 @@ const Products = () => {
                           align={column.align}
                           style={{
                             minWidth: column.minWidth,
-                            backgroundImage: "-webkit-linear-gradient(90deg, #fd501b, #ff861a)",
+                            backgroundImage:
+                              "-webkit-linear-gradient(90deg, #fd501b, #ff861a)",
                             color: "#fff",
-                            fontSize: '17px',
+                            fontSize: "17px",
                             fontWeight: "bold",
                           }}
                         >
@@ -280,19 +286,24 @@ const Products = () => {
                       ))}
                       <TableCell
                         style={{
-                          backgroundImage: "-webkit-linear-gradient(90deg, #fd501b, #ff861a)",
+                          backgroundImage:
+                            "-webkit-linear-gradient(90deg, #fd501b, #ff861a)",
                         }}
                       ></TableCell>
                       <TableCell
                         style={{
-                          backgroundImage: "-webkit-linear-gradient(90deg, #fd501b, #ff861a)",
+                          backgroundImage:
+                            "-webkit-linear-gradient(90deg, #fd501b, #ff861a)",
                         }}
                       ></TableCell>
                     </TableRow>
                   </TableHead>
                   <TableBody>
                     {products
-                      .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                      .slice(
+                        page * rowsPerPage,
+                        page * rowsPerPage + rowsPerPage
+                      )
                       .map((row, index) => {
                         return (
                           <TableRow
@@ -300,7 +311,9 @@ const Products = () => {
                             role="checkbox"
                             key={row.code}
                             style={
-                              index % 2 == 1 ? { backgroundColor: "#ff861a24" } : {}
+                              index % 2 == 1
+                                ? { backgroundColor: "#ff861a24" }
+                                : {}
                             }
                           >
                             {columns.map((column) => {
@@ -310,7 +323,10 @@ const Products = () => {
                               }
 
                               return (
-                                <TableCell key={column.id} style={{fontSize: '16px',}}>
+                                <TableCell
+                                  key={column.id}
+                                  style={{ fontSize: "16px" }}
+                                >
                                   {column.format && typeof value === "number"
                                     ? column.format(value)
                                     : value}
@@ -326,7 +342,11 @@ const Products = () => {
                               }}
                             >
                               <i
-                                style={{ fontSize: 18, color: "#005059", cursor: "pointer" }}
+                                style={{
+                                  fontSize: 18,
+                                  color: "#005059",
+                                  cursor: "pointer",
+                                }}
                                 className="bx bxs-edit hide-on-print"
                               ></i>
                             </TableCell>
@@ -339,7 +359,11 @@ const Products = () => {
                               }}
                             >
                               <i
-                                style={{fontSize: 18, color: "#fd501b", cursor: "pointer"}}
+                                style={{
+                                  fontSize: 18,
+                                  color: "#fd501b",
+                                  cursor: "pointer",
+                                }}
                                 className="bx bx-trash hide-on-print"
                               ></i>
                             </TableCell>
