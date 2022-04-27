@@ -3,7 +3,7 @@ import validateUser from "./validateUser";
 import useFormLogin from "./useFormLogin";
 import axios from "axios";
 import { useHistory } from "react-router-dom";
-import "./login.css";
+import "./Login.css";
 import { Link } from "react-router-dom";
 const Login = ({ setIsAuticated }) => {
   const history = useHistory();
