@@ -1,5 +1,5 @@
 @import url("https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap");
-@import url('https://fonts.googleapis.com/css2?family=Beau+Rivage&family=Dancing+Script:wght@700&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Beau+Rivage&family=Dancing+Script:wght@700&display=swap");
 
 :root {
   --main-bg: #ffffff;
@@ -81,23 +81,24 @@ button {
 .btn {
   position: relative;
   display: inline-block;
-  padding: .8rem 2.8rem;
+  padding: 0.8rem 2.8rem;
   font-size: 1.7rem;
   margin-top: 1rem;
-  border-radius: .5rem;
+  border-radius: 0.5rem;
   font-weight: 400;
   z-index: 0;
 }
 
 .btn::before {
-  content: '';
+  content: "";
   position: absolute;
   width: 0;
   height: 100%;
-  top: 0; right: 0;
+  top: 0;
+  right: 0;
   background-color: var(--main-color);
-  border-radius: .5rem;
-  transition: .3s linear;
+  border-radius: 0.5rem;
+  transition: 0.3s linear;
   z-index: -1;
 }
 
@@ -277,11 +278,9 @@ table {
 
 .card_select option {
   border: 2px solid #005059;
-
 }
 .card_select:focus option {
   border: 2px solid #005059;
-
 }
 .card_select:focus {
   border: 2px solid #005059;
@@ -319,7 +318,7 @@ select option {
 .card_value-label {
   display: block;
   padding: 5px 5px 10px;
-}  
+}
 
 .card_value-item {
   padding: 6px;
@@ -357,7 +356,6 @@ select option {
   animation: fade-in-top 1.5s;
 }
 
-
 /* button action */
 .action-btn {
   margin: 10px;
@@ -381,7 +379,6 @@ select option {
   margin-right: 6px;
 }
 
-
 /* button print file */
 .print_file-btn {
   animation: fade-in-left 1.5s;
@@ -397,16 +394,15 @@ select option {
   font-size: 18px;
 }
 
-
 /* form add, update */
 .form-container {
   border: 1px solid #ddd;
   background-color: #fff;
   padding-bottom: 30px;
   border: 0.2rem solid #005059;
-  border-radius:95% 4% 97% 5%/4% 94% 3% 95%;
+  border-radius: 95% 4% 97% 5%/4% 94% 3% 95%;
   overflow: hidden;
-  animation: zoom-out .8s;
+  animation: zoom-out 0.8s;
 }
 .form-heading {
   display: flex;
@@ -434,7 +430,7 @@ select option {
 .form-btn-exit:hover {
   background-color: rgb(255, 227, 209);
   transform: rotate(90deg);
-  transition: .2s linear;
+  transition: 0.2s linear;
 }
 .form-body {
   display: flex;
@@ -543,7 +539,6 @@ select option {
   margin-top: 20px;
 }
 
-
 @media screen {
   .title-print {
     display: none;
@@ -591,7 +586,7 @@ select option {
 @keyframes zoom-out {
   from {
     opacity: 0;
-    transform: scale(0.6)
+    transform: scale(0.6);
   }
   to {
     transform: scale(1);
@@ -599,3 +594,32 @@ select option {
   }
 }
 
+.pagination {
+  font-size: 14px;
+  margin-top: 25px;
+  display: flex;
+  align-items: center;
+}
+.pagination-left {
+  display: flex;
+  align-items: center;
+  margin-right: 5px;
+}
+.cell {
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 25px;
+  height: 25px;
+  background-color: #c4c4c4;
+  margin-right: 10px;
+  font-size: 14px;
+  color: #000;
+  user-select: none;
+}
+.cell.active {
+  background-color: #00b9f2;
+
+  font-weight: bold;
+}

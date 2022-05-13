@@ -16,6 +16,7 @@ import {
   Route,
   Redirect,
 } from "react-router-dom";
+import OrderDetail from "../../pages/orders/OrderDetail/OrderDetail";
 
 const Layout = () => {
   return (
@@ -24,6 +25,9 @@ const Layout = () => {
         <Switch>
           <Route path="/orders" element={<Orders />}>
             <Orders />
+          </Route>
+          <Route path="/orderDetail">
+            <OrderDetail />
           </Route>
           <Route path="/customers" element={<Customers />}>
             <Customers />

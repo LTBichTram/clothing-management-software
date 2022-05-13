@@ -1,0 +1,22 @@
+.orders_navbar_container{
+ 
+  
+}
+
+.list-action-orders-btn {
+  position: absolute;
+  right: 0;
+  top:0;
+  margin-right: 20px; 
+}
+.action-orders-btn {
+  margin-left: 15px;
+  cursor: pointer;
+  font-size: 18px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  padding: 8px;
+  color: #fff;
+  background-color: #4cb050;
+}
