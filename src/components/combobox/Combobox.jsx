@@ -31,9 +31,9 @@ function Combobox({ options, categoryActive, setCategoryActive }) {
         <span className="fas fa-caret-down"></span>
       </div>
       {isActive && (
-        <div className="dropdown-content">
+        <div className="tab-scrollY dropdown-content">
           <div
-            className="dropdown-item"
+            className="tab-scrollY-item"
             onClick={() => {
               setCategoryActive("Tất cả");
               setIsActive(false);
@@ -47,7 +47,7 @@ function Combobox({ options, categoryActive, setCategoryActive }) {
                 setCategoryActive(option.name);
                 setIsActive(false);
               }}
-              className="dropdown-item"
+              className="tab-scrollY-item"
             >
               {option.name}
             </div>

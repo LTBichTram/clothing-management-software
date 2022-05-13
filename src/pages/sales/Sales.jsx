@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import AddCustomer from "./AddCustomer/AddCustomer";
 import axios from "axios";
 import ComboBox from "../../components/combobox/Combobox";
@@ -29,6 +29,7 @@ const Sales = () => {
   const [showFormAddCustomer, setShowFormAddCustomer] = useState(false);
   const [inputTextSearchCustomer, setInputTextSearchCustomer] = useState("");
   const [showScanQrCode, setShowScanQrcode] = useState(false);
+  const wrapperRef = useRef(null);
   const [guestMoney, setGuestMoney] = useState({
     guestMoneyFormat: "0 đ",
     guestMoneyValue: 0,
@@ -148,7 +149,24 @@ const Sales = () => {
     });
     setProducts(productsFilter);
   }, [productSearchText]);
-  console.log({ products });
+  
+  useEffect(() => {
+    /**
+     * Alert if clicked on outside of element
+     */
+    function handleClickOutside(event) {
+      if (wrapperRef.current && !wrapperRef.current.contains(event.target)) {
+        setShowListCustomer(false);
+      }
+    }
+    // Bind the event listener
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      // Unbind the event listener on clean up
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [wrapperRef]);
+
   const [activeTab, setActiveTab] = useState(0);
   const [tabs, setTabs] = useState([
     {
@@ -296,9 +314,9 @@ const Sales = () => {
       </div>
 
       <div className="main_list sales_main">
-        <div className="list_left sales_left">
-          <div className="list_left-header">
-            <div className="list_left-header-top">
+        <div className="sales_left">
+          <div className="sales_header">
+            <div className="sales_header-top">
               <div className="search_name-wrapper sales_search">
                 <input
                   className="search_name-input"
@@ -316,7 +334,11 @@ const Sales = () => {
                 ></label>
               </div>
               <div className="action-btn sales_btn">
-                <button className="btn sales_btn" onClick={() => {setShowScanQrcode(!showScanQrCode)}}>
+                <button 
+                  className="btn sales_btn" 
+                  style={{fontSize: '16px', padding: '.5rem 2rem !important'}} 
+                  onClick={() => {setShowScanQrcode(!showScanQrCode)}}
+                >
                   <i className="bx bx-qr action-btn-icon"></i>
                   {showScanQrCode && "Tắt webcam"}
                   {!showScanQrCode && "Quét mã vạch"}
@@ -330,7 +352,7 @@ const Sales = () => {
                 />
               </div>
             </div>
-            <div className="list_left-header-bottom">
+            <div className="sales_header-bottom">
               <ul className="tab-bills">
                 {tabs.map((tab) => {
                   return (
@@ -353,7 +375,7 @@ const Sales = () => {
           </div>
           <div className="sales-list-products row">
             {showScanQrCode && (
-              <div className="col-4">
+              <div className="col-3">
                 <div className="sales-card">
                   <QrReader
                     onScan={handleScanProduct}
@@ -365,7 +387,7 @@ const Sales = () => {
             )}
             {products.map((product) => {
               return (
-                <div className=" col-4">
+                <div className=" col-3">
                   <div className="sales-card">
                     <div className="sales-card-img">
                       <img
@@ -378,7 +400,7 @@ const Sales = () => {
                       <div className="sales-card-name">
                         <p>{product.name}</p>
                       </div>
-                      <div className="sales-card-prices">
+                      <div className="sales-card_prices">
                         {product.discount > 0 && (
                           <p className="sales-card-cost-price">{`${product.costPrice.toLocaleString(
                             "en"
@@ -395,7 +417,7 @@ const Sales = () => {
                           }}
                           className="sales-card-buy-btn"
                         >
-                          Bán ngay
+                          Chọn
                         </div>
                       </div>
                     </div>
@@ -405,26 +427,26 @@ const Sales = () => {
             })}
           </div>
         </div>
-        <div className="list_right sales_right">
-          <div className="card_sales_customer">
-            <div className="sales-bill-customer-header">
-              <p>Khách hàng</p>
-              <button
-                onClick={() => {
-                  setShowFormAddCustomer(true);
-                }}
-                className="btn-add"
-              >
-                Thêm mới
-              </button>
+        <div className="sales_right">
+          <div className="sales_header">
+            <div className="sales_header-top">
+              <p style={{fontSize: '17px', fontWeight: 'bold'}}>Khách hàng</p>
+              <div className="action-btn sales_btn">
+                <button 
+                  className="btn sales_btn" 
+                  style={{fontSize: '16px', padding: '.5rem 2rem !important'}} 
+                  onClick={() => {setShowFormAddCustomer(true);}}
+                >
+                  <i className="bx bx-plus action-btn-icon"></i>
+                  Thêm mới
+                </button>
+              </div>
             </div>
-            <div className="sales-bill-search-container">
-              <div className="sales-bill-search">
+            <div className="sales_header-bottom">
+              <div className="search_name-wrapper sales_search" style={{width: '100%'}}>
                 <input
-                  onFocus={() => {
-                    setShowListCustomer(true);
-                    searchCustomers("");
-                  }}
+                  className="search_name-input"
+                  id="search_name-input"
                   value={inputTextSearchCustomer}
                   onChange={(e) => {
                     setInputTextSearchCustomer(e.target.value);
@@ -432,19 +454,21 @@ const Sales = () => {
                     setShowListCustomer(true);
                     searchCustomers(e.target.value);
                   }}
+                  onFocus={() => {
+                    setShowListCustomer(true);
+                    searchCustomers("");
+                  }}
                   type="text"
                   placeholder="Tìm kiếm khách hàng"
                 />
-                <i
-                  onClick={() => {
-                    setShowListCustomer(!showListCustomers);
-                    searchCustomers(inputTextSearchCustomer);
-                  }}
-                  className="bx bx-search"
-                ></i>
+                <label
+                  htmlFor="search_name-input"
+                  className="search_name-icon bx bx-search"
+                ></label>
               </div>
+              
               {showListCustomers && (
-                <div className="sales-bill-list">
+                <div ref={wrapperRef} className="tab-scrollY sales_customers">
                   {filterCustomers.map((customer) => {
                     return (
                       <div
@@ -466,7 +490,7 @@ const Sales = () => {
                             newCurrentCustomer[activeTab].name
                           );
                         }}
-                        className="sales-bill-list-item"
+                        className="tab-scrollY-item"
                       >
                         {customer.name}
                       </div>
@@ -475,14 +499,14 @@ const Sales = () => {
                 </div>
               )}
 
-              <div className="sales-bill-customer-info">
-                <div className="sales-bill-customer-info-item">
+              <div className="sales_customer-info">
+                <div className="sales_customer-info-item">
                   Khách hàng:&nbsp; <b>{currentCustomer[activeTab].name}</b>
                 </div>
-                <div className="sales-bill-customer-info-item">
+                <div className="sales_customer-info-item">
                   Số điện thoại:&nbsp; <b>{currentCustomer[activeTab].phone}</b>
                 </div>
-                <div className="sales-bill-customer-info-item">
+                <div className="sales_customer-info-item">
                   Tổng điểm tích luỹ:&nbsp;{" "}
                   <b>{currentCustomer[activeTab].point}</b>
                 </div>
@@ -490,19 +514,19 @@ const Sales = () => {
             </div>
           </div>
 
-          <div className="sales-order-detail">
-            <h3 className="sales-order-detail-header">Chi tiết hoá đơn</h3>
-            <div className="sales-order-detail-body">
+          <div className="card sales_order">
+            <h3 className="sales_order-header">Chi tiết hoá đơn</h3>
+            <div className="tab-scrollY sales_order-body">
               {orders[activeTab]?.orderDetails &&
                 orders[activeTab].orderDetails.map((orderItem, index) => {
                   if (orderItem.quantity >= 0)
                     return (
-                      <div className="sales-order-detail-item">
-                        <div className="sales-order-detail-img">
+                      <div className="tab-scrollY-item sales_order-item">
+                        <div className="sales_order-img">
                           <img src={orderItem.imageDisplay} alt="" />
                         </div>
-                        <div className="sales-order-detail-midle">
-                          <div className="sales-order-detail-name">
+                        <div className="sales_order-midle">
+                          <div className="sales_order-name">
                             <p>{orderItem.productName}</p>
 
                             <i
@@ -542,7 +566,7 @@ const Sales = () => {
                             ></i>
                           </div>
 
-                          <div className="sales-order-detail-desc">
+                          <div className="sales_order-desc">
                             <div className="group-count">
                               <div className="group-count-item">
                                 <i
@@ -615,16 +639,16 @@ const Sales = () => {
                 })}
             </div>
           </div>
-          <div className="sales-prices">
-            <div className="sales-prices-item">
+          <div className="sales_prices">
+            <div className="sales_prices-item">
               <p>Tạm tính</p>
               <span>{`${getTempPrice().toLocaleString("en")}đ`}</span>
             </div>
-            <div className="sales-prices-item">
+            <div className="sales_prices-item">
               <p>Điểm tích luỹ</p>
               <span>{getAccumulatedPoint()}</span>
             </div>
-            <div className="sales-prices-item">
+            <div className="sales_prices-item">
               <p>Sử dụng điểm</p>
               <input
                 value={scroreInput}
@@ -633,11 +657,11 @@ const Sales = () => {
                 type="text"
               />
             </div>
-            <div className="sales-prices-item">
+            <div className="sales_prices-item">
               <p>Giảm giá</p>
               <b>{`${getDecreasePrice().toLocaleString("en")}đ`}</b>
             </div>
-            <div className="sales-prices-item">
+            <div className="sales_prices-item">
               <p>Tổng tiền</p>
               <b>{`${getTotalPrice().toLocaleString("en")}đ`}</b>
             </div>
@@ -706,13 +730,16 @@ const Sales = () => {
                 },
               }}
             >
-              <div className="sales-checkout">
-                <button
+              <div className="action-btn sales_btn">
+                <button 
+                  className="btn" 
                   onClick={() => {
                     currentCustomer[activeTab].point -= scroreInput;
                     currentCustomer[activeTab].point += getAccumulatedPoint();
                   }}
+                  style={{ width: '100%'}}
                 >
+                  <i class='bx bx-credit-card-front action-btn-icon'></i>
                   Thanh toán
                 </button>
               </div>
