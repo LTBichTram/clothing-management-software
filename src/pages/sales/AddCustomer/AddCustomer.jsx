@@ -76,6 +76,12 @@ const AddCustomer = ({ open, handleCancel }) => {
       <div className="add-customer-container">
         <div className="add-customer-title ">
           <p>Thêm khách hàng</p>
+          <div 
+            onClick={() => {
+              handleCancel();
+            }}
+            className="bx bx-x form-btn-exit add-customer-close"
+          ></div>
         </div>
         <div className="add-customer-input-container">
           <input
@@ -108,19 +114,17 @@ const AddCustomer = ({ open, handleCancel }) => {
             onChange={handleChange}
             placeholder={errors.email ? errors.email : "Email"}
           />
-          <div
-            onClick={() => {
-              handleCancel();
-            }}
-            className="add-customer-close-btn"
-          >
-            <i class="fas fa-times"></i>
-          </div>
         </div>
 
-        <button onClick={handleSubmit} className="btn-add-customer">
+        <div className="action-btn" style={{margin: '0'}}>
+            <button className="btn" onClick={handleSubmit}>
+              <i className="bx bx-plus action-btn-icon"></i>
+              Thêm nhân viên{" "}
+            </button>
+          </div>
+        {/* <button onClick={handleSubmit} className="btn-add-customer">
           Đồng ý
-        </button>
+        </button> */}
       </div>
     </StyledModal>
   );

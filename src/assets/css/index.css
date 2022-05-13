@@ -315,7 +315,7 @@ select option {
 .card_value-label {
   display: block;
   padding: 5px 5px 10px;
-}  
+}
 .card_value-item {
   padding: 6px;
   font-size: 14px;
@@ -344,7 +344,7 @@ select option {
   justify-content: space-around;
   margin-top: 15px;
   margin-left: -10px;
-  padding: 25px 10px 30px 20px;
+  padding: 5px 10px 30px 20px;
 }
 
 .list_left {
@@ -382,7 +382,6 @@ select option {
 .css-1fw5qro-MuiPaper-root {
   box-shadow: 0 2px 15px rgb(0 0 0 / 25%) !important;
 }
-
 
 /* button print file */
 .print_file-btn {
@@ -544,6 +543,37 @@ select option {
   margin-top: 20px;
 }
 
+/* tab scroll Y */
+.tab-scrollY {
+  z-index: 2;
+  position: absolute;
+  background: #fff;
+  box-shadow: 3px 3px 10px 6px rgba(0, 0, 0, 0.06);
+  font-weight: 500;
+  color: #333;
+  width: 100%;
+  overflow-y: auto;
+  overflow-x: none;
+}
+.tab-scrollY::-webkit-scrollbar {
+  width: 6px;
+}
+.tab-scrollY::-webkit-scrollbar-thumb {
+  background-color: var(--main-color);
+  border-radius: 10px;
+}
+.tab-scrollY::-webkit-scrollbar-track {
+  border-color: var(--second-bg);
+}
+.tab-scrollY-item {
+  padding: 10px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.tab-scrollY-item:hover {
+  background: var(--second-color);
+}
+
 @media screen {
   .title-print {
     display: none;
@@ -580,7 +610,7 @@ select option {
 @keyframes fade-in-top {
   from {
     opacity: 0;
-    transform: translate(0%, -15%);
+    transform: translate(0%, -25%);
   }
   to {
     transform: translate(0, 0);
