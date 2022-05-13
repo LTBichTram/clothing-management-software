@@ -305,21 +305,17 @@ select option {
   margin-bottom: 20px;
   animation: fade-in-left 1.5s;
 }
-
 .card_value:nth-child(2) {
   margin-bottom: 20px;
   animation: fade-in-right 1.5s;
 }
-
 .card_value:hover {
   box-shadow: 0 3px 15px rgb(0 102 110 / 35%);
 }
-
 .card_value-label {
   display: block;
   padding: 5px 5px 10px;
-}
-
+}  
 .card_value-item {
   padding: 6px;
   font-size: 14px;
@@ -329,9 +325,12 @@ select option {
 .card_value-item > .card_value-input {
   width: 100%;
   padding: 5px;
-
   font-size: 14px;
   border-bottom: 1px solid #ccc;
+}
+.card_value-item > span,
+.timer-choice {
+  width: 25%;
 }
 
 /* main list */
@@ -378,6 +377,12 @@ select option {
 .action-btn-icon {
   margin-right: 6px;
 }
+
+/* table */
+.css-1fw5qro-MuiPaper-root {
+  box-shadow: 0 2px 15px rgb(0 0 0 / 25%) !important;
+}
+
 
 /* button print file */
 .print_file-btn {

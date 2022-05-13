@@ -11,8 +11,6 @@ import TableRow from "@mui/material/TableRow";
 import axios from "axios";
 import { useReactToPrint } from "react-to-print";
 
-import "./Customers.css";
-
 const columns = [
   { id: "id", label: "Mã Khách hàng" },
   { id: "name", label: "Tên khách hàng" },
