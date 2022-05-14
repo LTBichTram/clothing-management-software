@@ -38,7 +38,7 @@ const Orders = () => {
   const history = useHistory();
   const [showFormOrderDetail, setShowFormOrderDetail] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
-  const [itemsPerPage, setItemsPerPage] = useState(7);
+  const [itemsPerPage, setItemsPerPage] = useState(5);
   const [pageNumberLimit, setpageNumberLimit] = useState(5);
   const [maxPageNumberLimit, setmaxPageNumberLimit] = useState(5);
   const [minPageNumberLimit, setminPageNumberLimit] = useState(1);
@@ -198,7 +198,7 @@ const Orders = () => {
   };
 
   return (
-    <div>
+    <div className="main order">
       <StyledModal
         aria-labelledby="unstyled-modal-title"
         aria-describedby="unstyled-modal-description"
@@ -210,16 +210,20 @@ const Orders = () => {
       >
         <OrderDetail setShowFormOrderDetail={setShowFormOrderDetail} />
       </StyledModal>
-      <div className="row order-container">
-        <div className="col-3 order-card-list">
-          <div className="order-card">
-            <h4 className="order-card-heading">Tìm kiếm</h4>
-            <div className="order-card-body">
-              <div className="order-card-item">
+
+      <div className="search_name">
+      </div>
+
+      <div className="main_list">
+        <div className="list_left">
+          <div className="card_value">
+            <label className="card_value-label">Tìm kiếm</label>
+            <div className="card_value-body">
+              <div className="card_value-item">
                 <input
                   placeholder="Theo mã hoá đơn"
                   type="text"
-                  className="order-card-input"
+                  className="card_value-input"
                   value={orderFilter.orderId}
                   onChange={(e) => {
                     setOrderFilter((prev) => {
@@ -231,11 +235,11 @@ const Orders = () => {
                   }}
                 />
               </div>
-              <div className="order-card-item">
+              <div className="card_value-item">
                 <input
                   placeholder="Theo tên khách hàng"
                   type="text"
-                  className="order-card-input"
+                  className="card_value-input"
                   value={orderFilter.customerName}
                   onChange={(e) => {
                     setOrderFilter((prev) => {
@@ -247,11 +251,11 @@ const Orders = () => {
                   }}
                 />
               </div>
-              <div className="order-card-item">
+              <div className="card_value-item">
                 <input
                   placeholder="Theo tên người bán"
                   type="text"
-                  className="order-card-input"
+                  className="card_value-input"
                   value={orderFilter.seller}
                   onChange={(e) => {
                     setOrderFilter((prev) => {
@@ -265,10 +269,11 @@ const Orders = () => {
               </div>
             </div>
           </div>
-          <div className="order-card">
-            <h4 className="order-card-heading">Thời gian</h4>
-            <div className="order-card-body">
-              <div className="order-card-date-picker">
+          
+          <div className="card_value">
+            <h4 className="card_value-label">Thời gian</h4>
+            <div className="card_value-body">
+              <div className="card_value-item">
                 <LocalizationProvider dateAdapter={AdapterDateFns}>
                   <DatePicker
                     inputFormat="dd/MM/yyyy"
@@ -281,6 +286,7 @@ const Orders = () => {
                     onChange={(newValue) => {
                       setFromDate(newValue);
                     }}
+                    // className="card_value-input"
                     renderInput={(params) => (
                       <TextField
                         InputLabelProps={{
@@ -293,7 +299,7 @@ const Orders = () => {
                   />
                 </LocalizationProvider>
               </div>
-              <div className="order-card-date-picker">
+              <div className="card_value-item">
                 <LocalizationProvider dateAdapter={AdapterDateFns}>
                   <DatePicker
                     minDate={fromDate}
@@ -307,6 +313,7 @@ const Orders = () => {
                     InputProps={{
                       disableUnderline: true,
                     }}
+                    className="card_value-input"
                     renderInput={(params) => (
                       <TextField
                         InputLabelProps={{
@@ -322,10 +329,9 @@ const Orders = () => {
               </div>
             </div>
           </div>
-          <div className="order-card">
-            <h4 className="order-card-heading">Trạng thái</h4>
-
-            <div className="order-card-item">
+          <div className="card_value">
+            <h4 className="card_value-label">Trạng thái</h4>
+            <div className="card_value-item">
               <Checkbox
                 onChange={() => {
                   let newListStatus = orderFilter.listStatus;
@@ -337,9 +343,9 @@ const Orders = () => {
                 }}
                 value={orderFilter.listStatus[0]}
               />
-              <span>Đã thanh toán</span>
+              <span style={{width: '100%'}}>Đã thanh toán</span>
             </div>
-            <div className="order-card-item">
+            <div className="card_value-item">
               <Checkbox
                 value={orderFilter.listStatus[1]}
                 onChange={() => {
@@ -351,11 +357,12 @@ const Orders = () => {
                   });
                 }}
               />
-              <span>Đã trả hàng</span>
+              <span style={{width: '100%'}}>Đã trả hàng</span>
             </div>
           </div>
         </div>
-        <div className="col-9" style={{ padding: "10px 0px 10px 10px" }}>
+        
+        <div className="list_right">
           <div class="order-table-container">
             <table id="order-table">
               <thead>

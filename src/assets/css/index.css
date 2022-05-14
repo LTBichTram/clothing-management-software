@@ -261,6 +261,7 @@ table {
 
 .card_select-label {
   display: block;
+  font-weight: bold;
   padding: 10px 10px 15px;
   text-align: left;
 }
@@ -313,6 +314,7 @@ select option {
   box-shadow: 0 3px 15px rgb(0 102 110 / 35%);
 }
 .card_value-label {
+  font-weight: bold;
   display: block;
   padding: 5px 5px 10px;
 }
@@ -634,6 +636,7 @@ select option {
   margin-top: 25px;
   display: flex;
   align-items: center;
+  justify-content: flex-end;
 }
 .pagination-left {
   display: flex;
@@ -647,14 +650,15 @@ select option {
   justify-content: center;
   width: 25px;
   height: 25px;
-  background-color: #c4c4c4;
+  background-color: #e6e6e6;
   margin-right: 10px;
   font-size: 14px;
   color: #000;
   user-select: none;
 }
 .cell.active {
-  background-color: #00b9f2;
+  background-color: #fd501b;
+  color: white;
 
   font-weight: bold;
 }
