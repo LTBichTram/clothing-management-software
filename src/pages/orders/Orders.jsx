@@ -198,7 +198,7 @@ const Orders = () => {
   };
 
   return (
-    <div className="main order">
+    <div className="main">
       <StyledModal
         aria-labelledby="unstyled-modal-title"
         aria-describedby="unstyled-modal-description"

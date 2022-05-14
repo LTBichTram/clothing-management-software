@@ -333,9 +333,9 @@ const Sales = () => {
                   className="search_name-icon bx bx-search"
                 ></label>
               </div>
-              <div className="action-btn sales_btn">
+              <div className="action-btn mg-0 ani_fade-in-top">
                 <button 
-                  className="btn sales_btn" 
+                  className="btn mg-0" 
                   style={{fontSize: '16px', padding: '.5rem 2rem !important'}} 
                   onClick={() => {setShowScanQrcode(!showScanQrCode)}}
                 >
@@ -431,9 +431,9 @@ const Sales = () => {
           <div className="sales_header">
             <div className="sales_header-top">
               <p style={{fontSize: '17px', fontWeight: 'bold'}}>Khách hàng</p>
-              <div className="action-btn sales_btn">
+              <div className="action-btn mg-0 ani_fade-in-top">
                 <button 
-                  className="btn sales_btn" 
+                  className="btn mg-0" 
                   style={{fontSize: '16px', padding: '.5rem 2rem !important'}} 
                   onClick={() => {setShowFormAddCustomer(true);}}
                 >

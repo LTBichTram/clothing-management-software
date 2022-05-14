@@ -71,6 +71,14 @@ a:hover {
   color: var(--main-color);
 }
 
+.mg-0 {
+  margin: 0 !important;
+}
+
+.ani_fade-in-top {
+  animation: fade-in-top 1.5s !important;
+}
+
 button {
   cursor: pointer;
   border: 0;

@@ -21,6 +21,9 @@
 #order-table tbody {
   background-color: #fff;
 }
+#order-table tr {
+  cursor: pointer;
+}
 #order-table tr:nth-child(even) {
   background-color: #ffeedf;
 }
