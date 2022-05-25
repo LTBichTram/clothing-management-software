@@ -38,7 +38,7 @@ const BarChart = ({ horizontal, data, title }) => {
   return (
     <>
       <div className="bar-container">
-        <h3 style={{ textAlign: "center", marginBottom: "20px" }}>{title}</h3>
+        <h3 className="bar-container-title">{title}</h3>
         <Bar data={data} options={options} />
       </div>
     </>
