@@ -1,0 +1,12 @@
+.bar-container {
+  height: 500px;
+  margin-bottom: 50px;
+  background-color: #fff;
+}
+
+.bar-container-title {
+  padding: 10px;
+  border-bottom: 1px solid #ddd;
+  text-align: left;
+  margin-bottom: 10px;
+}

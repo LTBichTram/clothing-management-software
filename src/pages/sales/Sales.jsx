@@ -307,7 +307,7 @@ const Sales = () => {
     return Math.floor((getTotalPrice() * 100) / 900000);
   };
   return (
-    <div className="main sales">
+    <div className="main">
       <AddCustomer open={showFormAddCustomer} handleCancel={handleCancel} />
 
       <div className="search_name">
