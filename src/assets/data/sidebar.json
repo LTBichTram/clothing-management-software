@@ -42,13 +42,6 @@
     "icon": "bx bx-notepad",
     "permissionUser": [0, 1]
   },
-
-  {
-    "display_name": "Đổi trả",
-    "route": "/returns",
-    "icon": "bx bx-repost",
-    "permissionUser": [0, 1]
-  },
   {
     "display_name": "Tài khoản",
     "route": "/account",
