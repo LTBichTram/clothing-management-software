@@ -5,7 +5,6 @@ import Customers from "../../pages/customers/Customers";
 import DashBoard from "../../pages/dashboard/DashBoard";
 import Orders from "../../pages/orders/Orders";
 import Products from "../../pages/products/Products";
-import Returns from "../../pages/returns/Returns";
 import Revenues from "../../pages/revenues/Revenues";
 import Sales from "../../pages/sales/Sales";
 import Staffs from "../../pages/staffs/Staffs";
@@ -46,9 +45,6 @@ const Layout = () => {
           </Route>
           <Route path="/sales" element={<Sales />}>
             <Sales />
-          </Route>
-          <Route path="/returns" element={<Returns />}>
-            <Returns />
           </Route>
           <Route path="/account" element={<Account />}>
             <Account />
