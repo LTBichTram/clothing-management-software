@@ -1,7 +1,13 @@
-import { useState,useRef,useEffect } from "react";
+import { useState, useRef, useEffect } from "react";
 import "./combobox.css";
 
-function Combobox({ options, categoryActive, setCategoryActive }) {
+function Combobox({
+  options,
+  categoryActive,
+  setCategoryActive,
+  categoryIdActive,
+  setCategoryIdActive,
+}) {
   const [isActive, setIsActive] = useState(false);
   const wrapperRef = useRef(null);
 
@@ -11,7 +17,7 @@ function Combobox({ options, categoryActive, setCategoryActive }) {
      */
     function handleClickOutside(event) {
       if (wrapperRef.current && !wrapperRef.current.contains(event.target)) {
-        setIsActive(false)
+        setIsActive(false);
       }
     }
     // Bind the event listener
@@ -23,10 +29,7 @@ function Combobox({ options, categoryActive, setCategoryActive }) {
   }, [wrapperRef]);
   return (
     <div ref={wrapperRef} className="dropdown">
-      <div 
-        className="dropdown-btn" 
-        onClick={(e) => setIsActive(!isActive)}
-      >
+      <div className="dropdown-btn" onClick={(e) => setIsActive(!isActive)}>
         <p>{categoryActive}</p>
         <span className="fas fa-caret-down"></span>
       </div>
@@ -37,21 +40,26 @@ function Combobox({ options, categoryActive, setCategoryActive }) {
             onClick={() => {
               setCategoryActive("Tất cả");
               setIsActive(false);
+              setCategoryIdActive("*");
             }}
           >
             Tất cả
           </div>
-          {options.map((option) => (
-            <div
-              onClick={(e) => {
-                setCategoryActive(option.name);
-                setIsActive(false);
-              }}
-              className="tab-scrollY-item"
-            >
-              {option.name}
-            </div>
-          ))}
+          {options.map((option) => {
+            console.log(option);
+            return (
+              <div
+                onClick={(e) => {
+                  setCategoryActive(option.name);
+                  setCategoryIdActive(option.id);
+                  setIsActive(false);
+                }}
+                className="tab-scrollY-item"
+              >
+                {option.name}
+              </div>
+            );
+          })}
         </div>
       )}
     </div>

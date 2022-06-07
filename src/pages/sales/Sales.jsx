@@ -19,6 +19,7 @@ const Sales = () => {
 
   const [categories, setCategories] = useState([]);
   const [categoryActive, setCategoryActive] = useState("Tất cả");
+  const [categoryIdActive, setCategoryIdActive] = useState("*");
   const [showListCustomers, setShowListCustomer] = useState(false);
   const [products, setProducts] = useState([]);
   const [originProducts, setOriginProducts] = useState([]);
@@ -95,40 +96,30 @@ const Sales = () => {
 
   //get All cateogories
   useEffect(() => {
-    axios
-      .get("https://clothesapp123.herokuapp.com/api/products/getAllCategories")
-      .then((res) => {
-        setCategories(res.data);
-      });
+    axios.get("http://localhost:8080/api/categories").then((res) => {
+      setCategories(res.data);
+    });
   }, []);
   //filter products by category
   useEffect(() => {
+    console.log(` Category Active is ${categoryIdActive}`);
     axios
       .get(
-        "https://clothesapp123.herokuapp.com/api/products/productByCategory",
-        {
-          params: {
-            category: categoryActive,
-          },
-          headers: {
-            "Content-Type": "multipart/form-data",
-            "Access-Control-Allow-Origin": "*",
-          },
-        }
+        `http://localhost:8080/api/products/productsByCategoryId/${categoryIdActive}`
       )
       .then((res) => {
-        setProducts(res.data[0].productList);
-        setOriginProducts(res.data[0].productList);
+        setProducts(res.data);
+        setOriginProducts(res.data);
       })
       .catch((err) => {
         console.log(err);
       });
-  }, [categoryActive]);
+  }, [categoryIdActive]);
 
   // get All customers
   useEffect(() => {
     axios
-      .get("https://clothesapp123.herokuapp.com/api/customers/list")
+      .get("http://localhost:8080/api/customers")
       .then((res) => {
         setCustomers(res.data);
       })
@@ -149,7 +140,7 @@ const Sales = () => {
     });
     setProducts(productsFilter);
   }, [productSearchText]);
-  
+
   useEffect(() => {
     /**
      * Alert if clicked on outside of element
@@ -310,8 +301,7 @@ const Sales = () => {
     <div className="main">
       <AddCustomer open={showFormAddCustomer} handleCancel={handleCancel} />
 
-      <div className="search_name">
-      </div>
+      <div className="search_name"></div>
 
       <div className="main_list sales_main">
         <div className="sales_left">
@@ -334,10 +324,12 @@ const Sales = () => {
                 ></label>
               </div>
               <div className="action-btn mg-0 ani_fade-in-top">
-                <button 
-                  className="btn mg-0" 
-                  style={{fontSize: '16px', padding: '.5rem 2rem !important'}} 
-                  onClick={() => {setShowScanQrcode(!showScanQrCode)}}
+                <button
+                  className="btn mg-0"
+                  style={{ fontSize: "16px", padding: ".5rem 2rem !important" }}
+                  onClick={() => {
+                    setShowScanQrcode(!showScanQrCode);
+                  }}
                 >
                   <i className="bx bx-qr action-btn-icon"></i>
                   {showScanQrCode && "Tắt webcam"}
@@ -346,7 +338,9 @@ const Sales = () => {
               </div>
               <div className="sales_filter">
                 <ComboBox
+                  categoryIdActive={categoryActive}
                   categoryActive={categoryActive}
+                  setCategoryIdActive={setCategoryIdActive}
                   setCategoryActive={setCategoryActive}
                   options={categories}
                 />
@@ -385,57 +379,60 @@ const Sales = () => {
                 </div>
               </div>
             )}
-            {products.map((product) => {
-              return (
-                <div className=" col-3">
-                  <div className="sales-card">
-                    <div className="sales-card-img">
-                      <img
-                        className="sales-card-img"
-                        src={product.imageDisplay}
-                        alt="Ảnh"
-                      />
-                    </div>
-                    <div className="sales-card-desc">
-                      <div className="sales-card-name">
-                        <p>{product.name}</p>
+            {products &&
+              products.map((product) => {
+                return (
+                  <div className=" col-3">
+                    <div className="sales-card">
+                      <div className="sales-card-img">
+                        <img
+                          className="sales-card-img"
+                          src={product.imageUrl}
+                          alt="Ảnh"
+                        />
                       </div>
-                      <div className="sales-card_prices">
-                        {product.discount > 0 && (
-                          <p className="sales-card-cost-price">{`${product.costPrice.toLocaleString(
+                      <div className="sales-card-desc">
+                        <div className="sales-card-name">
+                          <p>{product.name}</p>
+                        </div>
+                        <div className="sales-card_prices">
+                          {product.discount > 0 && (
+                            <p className="sales-card-cost-price">{`${product.costPrice.toLocaleString(
+                              "en"
+                            )}đ`}</p>
+                          )}
+                          <p className="sales-card-sale-price">{`${product.salePrice.toLocaleString(
                             "en"
                           )}đ`}</p>
-                        )}
-                        <p className="sales-card-sale-price">{`${product.salePrice.toLocaleString(
-                          "en"
-                        )}đ`}</p>
-                      </div>
-                      <div className="sales-card-buy">
-                        <div
-                          onClick={() => {
-                            addItemToOrderDetail(product);
-                          }}
-                          className="sales-card-buy-btn"
-                        >
-                          Chọn
+                        </div>
+                        <div className="sales-card-buy">
+                          <div
+                            onClick={() => {
+                              addItemToOrderDetail(product);
+                            }}
+                            className="sales-card-buy-btn"
+                          >
+                            Chọn
+                          </div>
                         </div>
                       </div>
                     </div>
                   </div>
-                </div>
-              );
-            })}
+                );
+              })}
           </div>
         </div>
         <div className="sales_right">
           <div className="sales_header">
             <div className="sales_header-top">
-              <p style={{fontSize: '17px', fontWeight: 'bold'}}>Khách hàng</p>
+              <p style={{ fontSize: "17px", fontWeight: "bold" }}>Khách hàng</p>
               <div className="action-btn mg-0 ani_fade-in-top">
-                <button 
-                  className="btn mg-0" 
-                  style={{fontSize: '16px', padding: '.5rem 2rem !important'}} 
-                  onClick={() => {setShowFormAddCustomer(true);}}
+                <button
+                  className="btn mg-0"
+                  style={{ fontSize: "16px", padding: ".5rem 2rem !important" }}
+                  onClick={() => {
+                    setShowFormAddCustomer(true);
+                  }}
                 >
                   <i className="bx bx-plus action-btn-icon"></i>
                   Thêm mới
@@ -443,7 +440,10 @@ const Sales = () => {
               </div>
             </div>
             <div className="sales_header-bottom">
-              <div className="search_name-wrapper sales_search" style={{width: '100%'}}>
+              <div
+                className="search_name-wrapper sales_search"
+                style={{ width: "100%" }}
+              >
                 <input
                   className="search_name-input"
                   id="search_name-input"
@@ -466,7 +466,7 @@ const Sales = () => {
                   className="search_name-icon bx bx-search"
                 ></label>
               </div>
-              
+
               {showListCustomers && (
                 <div ref={wrapperRef} className="tab-scrollY sales_customers">
                   {filterCustomers.map((customer) => {
@@ -595,7 +595,9 @@ const Sales = () => {
                                   onChange={(e) => {
                                     let newOrders = [...orders];
                                     let orderItem = {
-                                      ...newOrders[activeTab].orderDetails[index],
+                                      ...newOrders[activeTab].orderDetails[
+                                        index
+                                      ],
                                     };
                                     if (Math.floor(e.target.value) >= 0) {
                                       orderItem.quantity = Math.floor(
@@ -731,15 +733,15 @@ const Sales = () => {
               }}
             >
               <div className="action-btn sales_btn">
-                <button 
-                  className="btn" 
+                <button
+                  className="btn"
                   onClick={() => {
                     currentCustomer[activeTab].point -= scroreInput;
                     currentCustomer[activeTab].point += getAccumulatedPoint();
                   }}
-                  style={{ width: '100%'}}
+                  style={{ width: "100%" }}
                 >
-                  <i class='bx bx-credit-card-front action-btn-icon'></i>
+                  <i class="bx bx-credit-card-front action-btn-icon"></i>
                   Thanh toán
                 </button>
               </div>
