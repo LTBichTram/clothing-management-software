@@ -249,6 +249,13 @@
   color: gray;
   font-weight: bold;
 }
+.sales_refund-payment {
+  display: flex;
+  margin-bottom: 10px;
+}
+.sales_refund-payment span {
+  flex: 1;
+}
 .sales-score-used {
   padding: 5px;
   text-align: center;
