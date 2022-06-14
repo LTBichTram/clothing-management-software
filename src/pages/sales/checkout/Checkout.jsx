@@ -4,7 +4,7 @@ import { useReactToPrint } from "react-to-print";
 import { useLocation, useHistory } from "react-router-dom";
 import QRCode from "qrcode";
 import axios from "axios";
-import { Alert } from "react-bootstrap";
+
 const Checkout = () => {
   let history = useHistory();
   let location = useLocation();

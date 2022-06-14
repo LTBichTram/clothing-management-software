@@ -9,6 +9,7 @@ import Revenues from "../../pages/revenues/Revenues";
 import Sales from "../../pages/sales/Sales";
 import Staffs from "../../pages/staffs/Staffs";
 import ProductQr from "../../pages/products/product_qr/ProductQr";
+//import Checkout from '../../pages/'
 import {
   Switch,
   BrowserRouter as Router,
@@ -16,6 +17,7 @@ import {
   Redirect,
 } from "react-router-dom";
 import OrderDetail from "../../pages/orders/OrderDetail/OrderDetail";
+import Checkout from "../../pages/sales/checkout/Checkout";
 
 const Layout = () => {
   return (
@@ -45,6 +47,9 @@ const Layout = () => {
           </Route>
           <Route path="/sales" element={<Sales />}>
             <Sales />
+          </Route>
+          <Route path="/checkout" element={<Checkout />}>
+            <Checkout />
           </Route>
           <Route path="/account" element={<Account />}>
             <Account />

@@ -249,8 +249,8 @@ const Sales = () => {
     var temp = [];
     var result = [];
     const orderItem = {
-      productId: product._id,
-      imageDisplay: product.imageDisplay,
+      productId: product.id,
+      imageDisplay: product.imageUrl,
       productName: product.name,
       salePrice: product.salePrice,
       quantity: 1,
