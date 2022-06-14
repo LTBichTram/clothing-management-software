@@ -667,9 +667,9 @@ const Sales = () => {
               <p>Tổng tiền</p>
               <b>{`${getTotalPrice().toLocaleString("en")}đ`}</b>
             </div>
-            <div className="refund-payment-row">
+            <div className="sales_refund-payment">
               <span style={{ color: "gray", fontWeight: "bold" }}>
-                Tiền khách đưa:
+                Tiền nhận:
               </span>
               <NumberFormat
                 thousandSeparator={true}
@@ -693,7 +693,7 @@ const Sales = () => {
                 type="text"
               />
             </div>
-            <div className="refund-payment-row">
+            <div className="sales_refund-payment">
               <span style={{ color: "gray", fontWeight: "bold" }}>
                 Tiền thối:
               </span>
