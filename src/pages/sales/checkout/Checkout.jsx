@@ -16,7 +16,7 @@ const Checkout = () => {
       JSON.stringify({
         orderTotal: order.orderTotal,
         customerId: order.customer.id,
-        point: order.customer.point,
+        point: Math.floor((order.orderTotal * 100) / 900000),
         name: order.customer.name,
       })
     ).then((url) => {
