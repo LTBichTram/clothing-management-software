@@ -33,21 +33,22 @@ const Checkout = () => {
   });
   const handleCheckout = () => {
     const orderApi = {
-      user: order.user.userId,
-      customer: order.customer.id,
+      user: order.user.id,
+      customer: order.customer.id == null ? "62a893b79586ea6abcded60a" : order.customer.id,
       subTotal: order.subTotal,
       discount: order.discount,
       orderTotal: order.orderTotal,
       point: order.customer.point,
       orderDetails: order.orderDetails.map((orderItem) => {
         return {
-          product: orderItem.productId,
-          quantity: orderItem.quantity,
+          productId: orderItem.productId,
+          quantity: orderItem.quantity.toString(),
         };
       }),
     };
+    console.log(orderApi)
     axios
-      .post("https://clothesapp123.herokuapp.com/api/orders", { ...orderApi })
+      .post("http://localhost:8080/api/orders/create", { ...orderApi })
       .then((res) => {
         setQrImage(res.data.qrCodeUrl);
         setOrderId(res.data._id);

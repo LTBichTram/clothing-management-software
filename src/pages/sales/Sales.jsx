@@ -476,7 +476,7 @@ const Sales = () => {
                           setShowListCustomer(!showListCustomers);
                           let newCurrentCustomer = [...currentCustomer];
                           newCurrentCustomer[activeTab] = {
-                            id: customer._id,
+                            id: customer.id,
                             name: customer.name,
                             phone: customer.phone,
                             point: customer.point,
