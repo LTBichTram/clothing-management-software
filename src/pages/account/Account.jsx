@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { useRef, useState, useEffect } from "react";
 import { Link, useLocation, useHistory } from "react-router-dom";
 import "./Account.css";
 import TextField from "@mui/material/TextField";
@@ -6,12 +6,23 @@ import AdapterDateFns from "@mui/lab/AdapterDateFns";
 import LocalizationProvider from "@mui/lab/LocalizationProvider";
 import DatePicker from "@mui/lab/DatePicker";
 import axios from "axios";
+import { ToastContainer, toast } from "react-toastify";
 export default function EditProfile({ rerender, setRerender }) {
   let location = useLocation();
   let history = useHistory();
-  console.log(rerender);
-  const userLocal = location.state?.user;
-  const [user, setUser] = useState(userLocal);
+  const userLocal = JSON.parse(localStorage.getItem("user"));
+  console.log(userLocal);
+  const [user, setUser] = useState();
+  useEffect(() => {
+    axios
+      .get(`http://localhost:8080/api/users/filter?key=${userLocal.id}`)
+      .then((res) => {
+        console.log("get all data");
+        console.log(res.data);
+        setUser(res.data[0]);
+      });
+  }, []);
+
   const [userUpdate, setUserUpdate] = useState({
     fullname: "",
     phone: "",
@@ -43,7 +54,7 @@ export default function EditProfile({ rerender, setRerender }) {
     //post to API
     axios
       .put(
-        `https://clothesapp123.herokuapp.com/api/users/updateUser/${user._id}`,
+        `http://localhost:8080/api/users/update/${userLocal.id}`,
         formStaff,
         {
           headers: {
@@ -54,16 +65,7 @@ export default function EditProfile({ rerender, setRerender }) {
         { timeout: 1000 }
       )
       .then((res) => {
-        setUser(res.data);
-        alert("Cập nhật thông tin thành công");
-        localStorage.setItem(
-          "user",
-          JSON.stringify({
-            userId: res.data._id,
-            fullname: res.data.fullname,
-          })
-        );
-        setRerender(!rerender);
+        toast("Cập nhật thông tin thành công");
       })
       .catch((err) => {
         console.log(err.response);
@@ -71,7 +73,7 @@ export default function EditProfile({ rerender, setRerender }) {
       });
   };
 
-    const formatDate = (dateStr) => {
+  const formatDate = (dateStr) => {
     const date = new Date(dateStr);
     return `${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()}`;
   };
@@ -81,44 +83,26 @@ export default function EditProfile({ rerender, setRerender }) {
       setAvatar(event.target.files[0]);
     }
   };
- const inputAvatarRef = useRef(null);
+  const inputAvatarRef = useRef(null);
   return (
     <div className="main">
-      <div className="search_name">
-      </div>
+      <div className="search_name"></div>
 
       <div className="account_header">
         <h1 className="userTitle">Thông tin người dùng</h1>
         <div className="account_header-control">
-          <Link
-            to={{
-              pathname: "./changePassWord",
-              state: { user: user },
-            }}
-          >
-            <div className="action-btn mg-0 ani_fade-in-top">
-              <button 
-                className="btn mg-0" 
-                style={{fontSize: '16px', padding: '.5rem 2rem !important'}} 
-              >
-                <i class='bx bxs-circle-three-quarter action-btn-icon' ></i>
-                Đổi mật khẩu
-              </button>
-            </div>
-          </Link>
-
           <div className="action-btn mg-0 ani_fade-in-top account-logout">
-              <button 
-                className="btn mg-0" 
-                style={{fontSize: '16px', padding: '.5rem 2rem !important'}} 
-                onClick={() => {
-                  window.location.reload();
-                }}
-              >
-                <i class='bx bx-log-out action-btn-icon'></i>
-                Đăng xuất
-              </button>
-            </div>
+            <button
+              className="btn mg-0"
+              style={{ fontSize: "16px", padding: ".5rem 2rem !important" }}
+              onClick={() => {
+                window.location.reload();
+              }}
+            >
+              <i class="bx bx-log-out action-btn-icon"></i>
+              Đăng xuất
+            </button>
+          </div>
         </div>
       </div>
 
@@ -126,7 +110,7 @@ export default function EditProfile({ rerender, setRerender }) {
         <div className="list_left">
           <div className="userShow">
             <div className="userShowTop">
-              <img src={user?.imageUrl} alt="" className="userShowImg" />
+              <img src={user?.imgUrl} alt="" className="userShowImg" />
               <div className="userShowTopTitle">
                 <span className="userShowUsername">{user?.fullname}</span>
                 <span className="userShowUserTitle">{user?.position}</span>
@@ -252,7 +236,7 @@ export default function EditProfile({ rerender, setRerender }) {
                       inputAvatarRef.current.click();
                     }}
                     className="userUpdateImg"
-                    src={avatar ? URL.createObjectURL(avatar) : user?.imageUrl}
+                    src={avatar ? URL.createObjectURL(avatar) : user?.imgUrl}
                     alt=""
                   />
 
@@ -279,5 +263,3 @@ export default function EditProfile({ rerender, setRerender }) {
     </div>
   );
 }
-
-  

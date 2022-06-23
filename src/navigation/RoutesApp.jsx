@@ -15,12 +15,12 @@ const RoutesApp = () => {
       <Route path="/home">
         <Layout />
       </Route>
-      <Route exact path="/">
+      <Route path="/">
         <Redirect to="/login" />
       </Route>
-      <Route exact path="*">
+      {/* <Route exact path="*">
         <Redirect to="/home" />
-      </Route>
+      </Route> */}
     </Switch>
   );
 };

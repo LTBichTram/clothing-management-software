@@ -170,12 +170,16 @@ const Dashboard = () => {
   };
   return (
     <div className="main">
-      <div className="search_name">
-      </div>
-      
+      <div className="search_name"></div>
+
       <div className="main_list dashboard_main">
         <div className="dashboard_overview">
-          <div className="card dashboard_overview-card" style={{ background: "-webkit-linear-gradient(left, #e3876e, #ef9946)" }}>
+          <div
+            className="card dashboard_overview-card"
+            style={{
+              background: "-webkit-linear-gradient(left, #e3876e, #ef9946)",
+            }}
+          >
             <div className="dashboard_overview-content">
               <div className="dashboard_content-heading">
                 <h3>Doanh thu</h3>
@@ -189,7 +193,12 @@ const Dashboard = () => {
             </div>
           </div>
 
-          <div className="card dashboard_overview-card" style={{ background: "-webkit-linear-gradient(left, #9756f3, #d36ad5)" }}>
+          <div
+            className="card dashboard_overview-card"
+            style={{
+              background: "-webkit-linear-gradient(left, #9756f3, #d36ad5)",
+            }}
+          >
             <div className="dashboard_overview-content">
               <div className="dashboard_content-heading">
                 <h3>Chi phí</h3>
@@ -203,7 +212,12 @@ const Dashboard = () => {
             </div>
           </div>
 
-          <div className="card dashboard_overview-card" style={{ background: "-webkit-linear-gradient(left, #3591d4, #78b8e4)" }}>
+          <div
+            className="card dashboard_overview-card"
+            style={{
+              background: "-webkit-linear-gradient(left, #3591d4, #78b8e4)",
+            }}
+          >
             <div className="dashboard_overview-content">
               <div className="dash-board-overview-card dashboard_overview-card-content">
                 <div className="dashboard_content-heading">
@@ -219,7 +233,12 @@ const Dashboard = () => {
             </div>
           </div>
 
-          <div className="card dashboard_overview-card" style={{ background: "-webkit-linear-gradient(left, #29b2a9, #3fdb91)" }}>
+          <div
+            className="card dashboard_overview-card"
+            style={{
+              background: "-webkit-linear-gradient(left, #29b2a9, #3fdb91)",
+            }}
+          >
             <div className="dashboard_overview-content">
               <div className="dashboard_content-heading">
                 <h3>Lợi nhuận</h3>
@@ -276,7 +295,7 @@ const Dashboard = () => {
         </div>
         {/**table dashboard */}
 
-        <div className="dashboard_product-top">
+        {/* <div className="dashboard_product-top">
           <div className="dashboard_product-top-header">
             <h3>Top 6 sản phẩm có doanh thu cao nhất trong ngày</h3>
           </div>
@@ -310,18 +329,17 @@ const Dashboard = () => {
               </tbody>
             </table>
           </div>
-        </div>
+        </div> */}
         {/**end table dashboard */}
 
-        <div className="dashboard_chart-amount">
+        {/* <div className="dashboard_chart-amount">
           <BarChart
             title="Top 6 sản phẩm bán chạy theo số lượng "
             data={dataClothes}
             horizontal
           />
-        </div>
+        </div> */}
       </div>
-      
     </div>
   );
 };

@@ -171,24 +171,26 @@ const Orders = () => {
         const dateOrder = new Date(order.dateOrder);
 
         if (order.customer) {
+          console.log("a");
           return (
             fromDateTime <= dateOrder.getTime() &&
             toDateTime > dateOrder.getTime() &&
-            order.id.indexOf(orderId) >= 0 &&
-            order.customer &&
-            order.customer?.name
+            order?.id.indexOf(orderId) >= 0 &&
+            order?.customer &&
+            order?.customer?.name
               .toLowerCase()
-              .indexOf(customerName.toLowerCase()) >= 0 &&
-            order.customer &&
-            order.user.fullname.indexOf(seller) >= 0
+              ?.indexOf(customerName.toLowerCase()) >= 0 &&
+            order?.customer &&
+            order?.user?.fullname?.indexOf(seller) >= 0
           );
         } else {
+          console.log("b");
           return (
             fromDateTime <= dateOrder.getTime() &&
             toDateTime > dateOrder.getTime() &&
-            order._id.indexOf(orderId) >= 0 &&
+            order?.id?.indexOf(orderId) >= 0 &&
             !customerName &&
-            order.user.fullname.indexOf(seller) >= 0
+            order?.user?.fullname?.indexOf(seller) >= 0
           );
         }
       });
@@ -211,8 +213,7 @@ const Orders = () => {
         <OrderDetail setShowFormOrderDetail={setShowFormOrderDetail} />
       </StyledModal>
 
-      <div className="search_name">
-      </div>
+      <div className="search_name"></div>
 
       <div className="main_list">
         <div className="list_left">
@@ -269,7 +270,7 @@ const Orders = () => {
               </div>
             </div>
           </div>
-          
+
           <div className="card_value">
             <h4 className="card_value-label">Thời gian</h4>
             <div className="card_value-body">
@@ -343,7 +344,7 @@ const Orders = () => {
                 }}
                 value={orderFilter.listStatus[0]}
               />
-              <span style={{width: '100%'}}>Đã thanh toán</span>
+              <span style={{ width: "100%" }}>Đã thanh toán</span>
             </div>
             <div className="card_value-item">
               <Checkbox
@@ -357,11 +358,11 @@ const Orders = () => {
                   });
                 }}
               />
-              <span style={{width: '100%'}}>Đã trả hàng</span>
+              <span style={{ width: "100%" }}>Đã trả hàng</span>
             </div>
           </div>
         </div>
-        
+
         <div className="list_right">
           <div class="order-table-container">
             <table id="order-table">

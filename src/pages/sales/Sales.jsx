@@ -232,16 +232,22 @@ const Sales = () => {
     setFilterCustomers(customersFilter);
   };
   //handle scan product
-  const handleScanProduct = (data) => {
-    if (data) {
-      console.log(JSON.parse(data));
-      const productScan = JSON.parse(data);
-      const prouduct = getProductByName(productScan.name);
+  const handleScanProduct = (data, err) => {
+    console.log("hehehh");
+    if (!!data) {
+      // console.log(data);
+      // console.log(JSON.parse(data));
+      const productScan = data.text;
+      //  console.log(productScan);
+      const prouduct = getProductByName(productScan);
+      console.log(prouduct);
       addItemToOrderDetail(prouduct);
+    } else {
+      console.log("LOi");
     }
   };
-  const getProductByName = (name) => {
-    const index = products.findIndex((product) => product.name === name);
+  const getProductByName = (id) => {
+    const index = products.findIndex((product) => product.id === id);
     return products[index];
   };
   //handle add 1 item to orderDetail
@@ -372,7 +378,7 @@ const Sales = () => {
               <div className="col-3">
                 <div className="sales-card">
                   <QrReader
-                    onScan={handleScanProduct}
+                    onResult={(data, err) => handleScanProduct(data, err)}
                     showViewFinder={false}
                     delay={500}
                   />
